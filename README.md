@@ -1,6 +1,8 @@
 WAD GROUP PROJECT
+-----------------
 
 Download: 
+---------
 	git clone https://github.com/palamalama/WAD_Project.git
 
 To Download with different name:
