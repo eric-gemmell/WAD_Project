@@ -18,8 +18,14 @@ Running Things:
  
 Changing Things:
 ----------------
+For Design Specifications for this Friday:
 
+	git checkout Design_Specification
+	git pull
+	git checkout -b <Your Specification Branch>
+	
 Please create a new branch using:
+
 	git checkout -b <Your Branch Name>
 
 Please do not commit to master, things should be done on a branch :)
