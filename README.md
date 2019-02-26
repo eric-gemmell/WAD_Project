@@ -2,6 +2,7 @@ WAD GROUP PROJECT
 -----------------
 
 Created in Python 3.5 (should work for 3.6 and 3.7)
+
 Use Django version 2.1.7 (install using pip install Django==2.1.7)
 
 Download: 
