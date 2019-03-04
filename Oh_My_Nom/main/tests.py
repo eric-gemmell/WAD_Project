@@ -11,7 +11,7 @@ class GeneralTests(TestCase):
 		pass
 	
 	def test_index_page_exists(self):
-		response = self.client.get(reverse('index'))
+		response = self.client.get(reverse('main:index'))
 		if(response.content == b""):
 			self.fail("index page contains no content!")
 
