@@ -17,6 +17,11 @@ class GeneralTests(TestCase):
 	
 	def test_templates_are_served(self):
 		try:
-			template.loader.get_template("main/index.html")	
+			template.loader.get_template("main/test.html")	
 		except:
-			self.fail("could not find index template, are you sure templates are being served?")
+			self.fail("could not find templates/main/test.html template, are you sure templates are being served?, maybe someone deleted the file...")
+
+	def test_static_files_are_served(self):
+		result = finders.find('images/test.jpg')
+		if(result == None):
+			self.fail("could not get images/test.jpg static file, are you they are served, or someone deleted the file?")
