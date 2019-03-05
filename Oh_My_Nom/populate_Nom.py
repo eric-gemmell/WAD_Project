@@ -134,13 +134,3 @@ def add_cat(name):
 if __name__ == '__main__':
 	print("Starting Noms population script...")
 	populate()
-
-#	cats = {"Recipes": {"pages": recipes_pages, "views": 128, "likes": 64},
-#		"Restaurants": {"pages": restaurant_pages, "views": 64, "likes": 32},
-#               }
-#
-#
-#	for cat, cat_data in cats.items():
-#		c = add_cat(cat, cat_data["views"], cat_data["likes"])
-#		for p in cat_data["pages"]:
-#			add_page(c, p["title"], 
