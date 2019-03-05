@@ -25,3 +25,4 @@ class GeneralTests(TestCase):
 		result = finders.find('images/test.jpg')
 		if(result == None):
 			self.fail("could not get images/test.jpg static file, are you they are served, or someone deleted the file?")
+	
