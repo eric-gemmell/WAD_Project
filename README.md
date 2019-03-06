@@ -22,15 +22,19 @@ Running Things:
  
 Changing Things:
 ----------------
-For Design Specifications for this Friday:
-
-	git checkout Design_Specification
-	git pull
-	git checkout -b <Your Specification Branch>
-	
 Please create a new branch using:
 
 	git checkout -b <Your Branch Name>
+	
+Save current changes using:
+	
+	git add *
+	git commit -m "Description of what I have changed"
+	git push origin <Your Branch Name>
+
+Switch Between Branches: (Note that git won't let you switch branch unless all changes have been saved)
+	
+	git checkout <Branch you want to change to>
 
 Please do not commit to master, things should be done on a branch :)
 
