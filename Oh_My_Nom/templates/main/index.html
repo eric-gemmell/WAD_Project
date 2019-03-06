@@ -1,2 +1,9 @@
 {% extends 'main/base.html' %}
 
+{% block main_block %}
+	<h1>Index Page, Welcome To Oh_My_Nom!<h1/>
+	<ul>
+		<li><a href="{% url 'main:hotrestaurants' %}">Take Me Out!</a></li>
+		<li><a href="{% url 'main:randomrecipes' %}">Generate Random Recipe</a></li>
+	<ul/>
+{% endblock %}

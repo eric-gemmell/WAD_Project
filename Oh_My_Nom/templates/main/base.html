@@ -13,6 +13,14 @@
 	</head>
 	<body>
 		<div>
+			<!-- This part corresponds to the top section of the html, IT IS INTENDED TO BE UPLOADED in some form that is beyond me at the moment -->
+			<a href="{% url 'main:index' %}">Home Page</a>
+			<!-- Meant to change to detect if we are logged in but that is beyond me atm -->
+			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
+			<br />
+			
+		<div/>
+		<div>
                         {% block main_block %}
                                 <div><strong>Normally Content Should be here... but since it isn't how about this instead?</strong><br /></div> 
 				<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Main Content Page</a>

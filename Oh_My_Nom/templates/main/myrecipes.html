@@ -1,0 +1,7 @@
+{% extends 'main/base.html' %}
+
+<!-- Should Only be seen if user is logged in -->
+{% block main_block %}
+	<p> Welcome to your saved recipes, note that recipes you click on are automatically added <p/> 
+	<a href="{% url 'main:randomrecipes' %}">Give Me More Recipes!</a>
+{% endblock %}

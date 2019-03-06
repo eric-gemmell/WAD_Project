@@ -1,0 +1,7 @@
+{% extends 'main/base.html' %}
+
+<!-- Should Only be seen if user is logged in -->
+{% block main_block %}
+	<p>Random Recipes You Want:<p/> 
+	<a href="{% url 'main:myrecipes' %}">my saved recipes</a>
+{% endblock %}

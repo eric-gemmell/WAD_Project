@@ -25,4 +25,31 @@ class GeneralTests(TestCase):
 		result = finders.find('images/test.jpg')
 		if(result == None):
 			self.fail("could not get images/test.jpg static file, are you they are served, or someone deleted the file?")
-	
+
+class ViewsTests(TestCase):
+	def setUp(self):
+		pass
+	def tearDown(self):
+		pass
+
+
+	def test_index_page_exists(self):
+		response = self.client.get(reverse('main:index'))
+
+
+	def test_hotrestaurants_page_exists(self):
+		response = self.client.get(reverse('main:hotrestaurants'))
+
+	def test_registersignin_page_exists(self):
+		response = self.client.get(reverse('main:registersignin'))
+
+	def test_randomrecipes_page_exists(self):
+		response = self.client.get(reverse('main:randomrecipes'))
+
+	def test_myrecipes_page_exists(self):
+		response = self.client.get(reverse('main:myrecipes'))
+
+	def test_myplaces_page_exists(self):
+		response = self.client.get(reverse('main:myplaces'))
+
+

@@ -1,0 +1,7 @@
+{% extends 'main/base.html' %}
+
+<!-- Should Only be seen if user is logged in -->
+{% block main_block %}
+	<p> Welcome to the hot_restaurants page! <p/> 
+	<a href="{% url 'main:myplaces' %}">my saved restaurants</a>
+{% endblock %}
