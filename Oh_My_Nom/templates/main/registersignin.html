@@ -1,1 +1,19 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block main_block %}
+	{% if registered %}
+		<strong>thank you for registering!</strong>
+		<a href="{% url 'main:index' %}">Return to the homepage.</a><br />
+	{% else %}
+		<strong>register here!</strong><br />
+		<form id="user_form" method="post" action="{% url 'main:registersignin' %}"enctype="multipart/form-data">
+			{% csrf_token %}
+			<!-- Display each form -->
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Register" />
+		</form>
+	{% endif %}
+{% endblock %} 

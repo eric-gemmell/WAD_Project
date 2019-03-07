@@ -8,6 +8,7 @@ urlpatterns = [
 	path("randomrecipes/",views.randomrecipes,name="randomrecipes"),
 	path("hotrestaurants/",views.hotrestaurants,name="hotrestaurants"),
 	path("registersignin/",views.registersignin,name="registersignin"),
+	path("tempsignin/",views.tempsignin,name="tempsignin"),
 	path("myplaces/",views.myplaces,name="myplaces"),
 	path("myrecipes/",views.myrecipes,name="myrecipes"),
 	path("test/",views.test,name="test"),

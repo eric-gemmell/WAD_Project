@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!-- Base Html is the sourrounding html document that includes links to the home page and to other places, making everything else less repetitive-->
-{% load staticfiles %}
 <html>
 	<head lang="en">
 		<meta charset="UTF-8" />
@@ -17,6 +15,7 @@
 			<a href="{% url 'main:index' %}">Home Page</a>
 			<!-- Meant to change to detect if we are logged in but that is beyond me atm -->
 			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
+			<a href="{% url 'main:tempsignin' %}">Login</a>
 			<br />
 			
 		<div/>
