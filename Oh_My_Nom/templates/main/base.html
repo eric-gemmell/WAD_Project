@@ -9,7 +9,20 @@
                         {% block title_block %}
                         {% endblock %}
                 </title>
-
+		<style>p#text {color : red;} </style>
+		<script type="text/javascript" src="{% static "js/jquery.js" %}"></script> 
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// Wait until the page is loaded
+				
+				$('#recipes_button').click(function() {
+					$.ajax({url: "show_recipes", success: function(result){
+						$("#div1".html(result));
+					}});
+				});
+				
+			});
+		</script>
 	</head>
 	<body>
 		<div>
@@ -18,6 +31,16 @@
 				<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Main Content Page</a>
                         {% endblock%}
                 </div>
+		
+		<div>
+			<button id="recipes_button"> Get random recipes </button> 
+			<p id = "text"> Recipes </p> 
+			<button id="restaurants"> Get random restaurant </button> 
+			<p id = "text2"> Restaurant </p> 
+		</div>
+		
+		
+		
 		<div>
 			<ul>
 				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Invest in Oh_My_Nom!</a></li>

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from main.models import Category
 from main.models import Page
+import random
 
 def index(request):
     category_list = Category.objects
@@ -27,3 +28,14 @@ def show_category(request, category_name_slug):
                 context_dict['pages'] = None
 
 	return render(request, 'main/category.html', context_dict) 
+	
+def show_recipes(request):
+	category_list = Category.objects
+	recipes = []
+	
+	#get random numbers and pick those indices as recipes (range of how many recipes you have)
+	randList = random.sample(range(1,20),5)
+	for i in randList:
+		recipes += category_list["Recipes"]["pages"][i]
+	return recipes
+	
