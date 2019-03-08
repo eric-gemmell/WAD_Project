@@ -5,8 +5,8 @@ from main.models import Page
 import random
 
 def index(request):
-    category_list = Category.objects
-    page_list = Page.objects
+    category_list = Category.objects.all()
+    page_list = Page.objects.all()
     context_dict = {'categories': category_list, 'pages':page_list}
     return render(request, 'main/index.html', context_dict)
 
@@ -30,12 +30,15 @@ def show_category(request, category_name_slug):
 	return render(request, 'main/category.html', context_dict) 
 	
 def show_recipes(request):
-	category_list = Category.objects
+	category_list = Category.objects.all()
 	recipes = []
 	
 	#get random numbers and pick those indices as recipes (range of how many recipes you have)
-	randList = random.sample(range(1,20),5)
+	randList = random.sample(range(0,19),5)
+
 	for i in randList:
-		recipes += category_list["Recipes"]["pages"][i]
-	return recipes
+            recipes += category_list["Recipes"]["pages"][i]
+		
+	return HttpResponse(recipes)
+        
 	
