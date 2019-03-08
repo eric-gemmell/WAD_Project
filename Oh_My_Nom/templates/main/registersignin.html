@@ -2,18 +2,31 @@
 {% load staticfiles %}
 
 {% block main_block %}
-	{% if registered %}
-		<strong>thank you for registering!</strong>
-		<a href="{% url 'main:index' %}">Return to the homepage.</a><br />
-	{% else %}
-		<strong>register here!</strong><br />
-		<form id="user_form" method="post" action="{% url 'main:registersignin' %}"enctype="multipart/form-data">
-			{% csrf_token %}
-			<!-- Display each form -->
-			{{ user_form.as_p }}
-			{{ profile_form.as_p }}
-			<!-- Provide a button to click to submit the form. -->
-			<input type="submit" name="submit" value="Register" />
-		</form>
+	<strong>register here!</strong><br />
+	{% if register_error %}
+		<p>{{ register_error }}<p/>
 	{% endif %}
+	<form id="user_form" method="post" action="{% url 'main:registersignin' %}"enctype="multipart/form-data">
+		{% csrf_token %}
+		Username: <input type="text" name="registerusername" value="" size="50" />
+		<br />
+		Password: <input type="password" name="registerpassword" value="" size="50" />
+		<br />	
+		<input type="submit" name="submit" value="Register" />
+	</form>
+	<br />
+	<br />
+	<strong>Or Sign In!</strong>
+	{% if signin_error %}
+		<p>{{ signin_error }}<p/>
+	{% endif %}
+	<form id="login_form" method="post" action="{% url 'main:registersignin' %}">
+		{% csrf_token %}
+		Username: <input type="text" name="signinusername" value="" size="50" />
+		<br />
+		Password: <input type="password" name="signinpassword" value="" size="50" />
+		<br />
+		<input type="submit" value="Sign In" />
+	</form>
+
 {% endblock %} 
