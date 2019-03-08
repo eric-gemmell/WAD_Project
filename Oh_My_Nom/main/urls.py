@@ -1,11 +1,10 @@
+from django.conf.urls import url
 from main import views
-from django.urls import path
-from django.contrib import admin
 
-app_name="main"
 urlpatterns = [
-	path("",views.index,name="index"),
-	path("test/",views.test,name="test"),
-	path("admin/", admin.site.urls),
+    url(r'^$', views.index, name='index'),
+    url(r'^about/', views.about, name='about'),
+    url(r'^category/(?P<category_name_slug>[\w\-]+)/$',
+    views.show_category, name='show_category'),
 ]
 
