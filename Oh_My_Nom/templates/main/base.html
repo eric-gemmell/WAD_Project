@@ -17,7 +17,11 @@
 			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
 			<a href="{% url 'main:tempsignin' %}">Login</a>
 			<br />
-			
+		<div/>
+		<div>
+			{% if user.is_authenticated %}
+				Welcome {{ user.username }}.
+			{% endif %}			
 		<div/>
 		<div>
                         {% block main_block %}
