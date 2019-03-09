@@ -21,15 +21,16 @@ def registersignin(request):
 	context_dict={}
 	if request.method == 'POST':
 		if(request.POST.get("registerusername") and request.POST.get("registerpassword")):
-			print("\n\n GOT REGISTER INFORMATION \n\n")
+			#This Executes when the register form has been completed
 			username = request.POST.get("registerusername")
 			password = request.POST.get("registerpassword")
 			try:
 				User.objects.get(username=username)
-				print("\n\nNON UNIQUE USERNAME")
+				#The previous statement breaks the code when it cannot find the given user,
+				#this code executes when someone tries to reregister a username
 				context_dict["register_error"] = "An account with that username already exists"
 			except:
-				print("\n\nUNIQUE USERNAME")
+				#This code executes when the username provided is new
 				user = User(username=username)
 				user.save()
 				#STILL need to check if password meets minum requirements
@@ -44,7 +45,7 @@ def registersignin(request):
                                 		return HttpResponseRedirect(reverse('main:index'))
 
 		elif(request.POST.get("signinusername") and request.POST.get("signinpassword")):
-			print("\n\n GOT SIGNIN INFORMATION \n\n")
+			#This code executes when the sign in form has been completed
 			username = request.POST.get('signinusername')
 			password = request.POST.get('signinpassword')
 			user = authenticate(username=username, password=password)
@@ -60,42 +61,7 @@ def registersignin(request):
 		
 	return render(request,"main/registersignin.html",context = context_dict)
 
-def signin(request):
-	print("received request in sign in !")
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(username=username, password=password)
-		if user:
-			if user.is_active:
-				login(request, user)
-				return HttpResponseRedirect(reverse('main:index'))
-			else:	
-				return HttpResponse("Your account is disabled.")
-		else:
-			print("Invalid login details: {0}, {1}".format(username, password))
-			return HttpResponse("Invalid login details supplied.")
-	else:
-		return HttpResponseRedirect(reverse("main:index"))
-
-def tempsignin(request):
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(username=username, password=password)
-		if user:
-			if user.is_active:
-				login(request, user)
-				return HttpResponseRedirect(reverse('main:index'))
-			else:	
-				return HttpResponse("Your account is disabled.")
-		else:
-			print("Invalid login details: {0}, {1}".format(username, password))
-			return HttpResponse("Invalid login details supplied.")
-	else:
-		return render(request, 'main/tempsignin.html', {})
-
-def tempsignout(request):
+def signout(request):
 	logout(request)
 	return HttpResponseRedirect(reverse("main:index"))
 
@@ -104,7 +70,7 @@ def myplaces(request):
 
 def myrecipes(request):
 	if not request.user.is_authenticated:
-		return HttpResponseRedirect(reverse("main:tempsignin"))
+		return HttpResponseRedirect(reverse("main:registersignin"))
 	return render(request,"main/myrecipes.html")
 
 def test(request):
