@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-
+from django.contrib.auth.decorators import login_required
 
 #Index is the main page of the site
 #the html document is stored in the 'templates/main' folder
@@ -65,12 +65,19 @@ def signout(request):
 	logout(request)
 	return HttpResponseRedirect(reverse("main:index"))
 
+def logged_in_or_redirect(view_function):
+	def wrapper(*args,**kwargs):
+		if not args[0].user.is_authenticated:
+			return HttpResponseRedirect(reverse("main:registersignin"))
+		return view_function(*args,**kwargs)
+	return wrapper
+
+@logged_in_or_redirect	
 def myplaces(request):
 	return render(request,"main/myplaces.html")
 
+@logged_in_or_redirect
 def myrecipes(request):
-	if not request.user.is_authenticated:
-		return HttpResponseRedirect(reverse("main:registersignin"))
 	return render(request,"main/myrecipes.html")
 
 def test(request):
