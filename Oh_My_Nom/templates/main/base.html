@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-<!--
 <html>
 	<head lang="en">
 		<meta charset="UTF-8" />
@@ -13,9 +11,9 @@
 	</head>
 	<body>
 		<div>
-			<!- - This part corresponds to the top section of the html, IT IS INTENDED TO BE UPLOADED in some form that is beyond me at the moment - ->
+			<!-- This part corresponds to the top section of the html, IT IS INTENDED TO BE UPLOADED in some form that is beyond me at the moment -->
 			<a href="{% url 'main:index' %}">Home Page</a>
-			<!- - Meant to change to detect if we are logged in but that is beyond me atm - ->
+			<!-- Meant to change to detect if we are logged in but that is beyond me atm -->
 			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
 			<a href="{% url "main:signout" %}">Logout</a>
 			<br />
@@ -40,102 +38,3 @@
 		</div>
 	</body>
 </html>
--->
-
-{% load staticfiles %}
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,
-initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="{% static 'images/favicon.ico' %}">
-<title>
-Oh My Nom! {% block title %}Home{% endblock %}
-</title>
-<!-- Bootstrap core CSS -->
-<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
-rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href=
-"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
-rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-<button class="navbar-toggler navbar-toggler-right hidden-lg-up"
-type="button"
-data-toggle="collapse"
-data-target="#navbar"
-aria-controls="navbar"
-aria-expanded="false"
-aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<a class="navbar-brand" href="{% url 'main:index' %}">Oh My Nom</a>
-<div class="collapse navbar-collapse" id="navbar">
-<ul class="navbar-nav mr-auto">
-<li class="nav-item active">
-<a class="nav-link" href="{% url 'main:index' %}">
-Home
-</a>
-</li>
-</div>
-</nav>
-<div class="container-fluid">
-<div class="row">
-<!-- <div class="col-sm-3 col-md-2 sidebar">
-{% block sidebar_block %}{% endblock %}
-</div>
-<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-{% block body_block %}{% endblock %}
-</div>
-</div>
-</div>
--->
-<!--
-<div>
-			<!- - This part corresponds to the top section of the html, IT IS INTENDED TO BE UPLOADED in some form that is beyond me at the moment - ->
-			<a href="{% url 'main:index' %}">Home Page</a>
-			<!- - Meant to change to detect if we are logged in but that is beyond me atm - ->
-			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
-			<a href="{% url "main:signout" %}">Logout</a>
-			<br />
-		<div/>
-		<div>
-			{% if user.is_authenticated %}
-				Welcome {{ user.username }}.
-			{% endif %}			
-		<div/>
-		<div>
-                                <div><strong>Normally Content Should be here... but since it isn't how about this instead?</strong><br /></div> 
-				<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Main Content Page</a>
-                       
-                </div>
-		<div>
-			<ul>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Invest in Oh_My_Nom!</a></li>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">About us</a></li>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Careers</a></li>
-			</ul>
-		</div>
--->
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script
-src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
-</script>
-<script
-src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
-</script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script
-src=
-"http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
-</script>
-</body>
-</html>
-
