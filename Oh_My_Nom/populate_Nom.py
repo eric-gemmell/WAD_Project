@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Oh_My_Nom.settings')
 
 import django
 django.setup()
-from Nom.models import Category, Page
+from main.models import Category, Page
 
 def populate():
 

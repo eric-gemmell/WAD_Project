@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^Nom/', include('main.urls')),
     url(r'^admin/', admin.site.urls),
-	url(r'^show_recipes/', views.show_recipes, name='show_recipes'),
+    url(r'^show_recipes/', views.show_recipes, name='show_recipes'),
 ]
