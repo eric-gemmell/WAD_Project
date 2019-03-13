@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from main.models import Category
+from main.models import Page
+import random
 
 #Index is the main page of the site
 #the html document is stored in the 'templates/main' folder
@@ -14,7 +17,21 @@ def hotrestaurants(request):
 	return render(request,"main/hotrestaurants.html")
 
 def randomrecipes(request):
-	return render(request,"main/randomrecipes.html")
+        recipes = []
+        count = 0
+
+        #get random numbers and pick those indices as recipes (range of how many recipes you have)
+        randList = random.sample(range(0,19),3)
+
+        for obj in Page.objects.all():
+                if (count in randList):
+                        url = obj.url
+                        name = obj.title
+                        recipes += ["Try this: ","<a href=",url,">",name,"</a>","<br>"]
+                count += 1
+
+        return HttpResponse(recipes)
+	#return render(request,"main/randomrecipes.html")
 
 def registersignin(request):
 	registered = False

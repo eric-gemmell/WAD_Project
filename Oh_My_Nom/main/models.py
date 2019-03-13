@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -14,4 +15,24 @@ class UserProfile(models.Model):
 	
 	def __str__():
 		return self.user.username
-	
+
+
+class Category(models.Model):
+	name = models.CharField(max_length=128, unique=True)
+
+	def __str__(self): 
+		return self.name
+
+
+class Page(models.Model):
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+	title = models.CharField(max_length=128)
+	url = models.URLField()
+
+	def __str__(self): 
+		return self.title
+
+class PageAdmin(admin.ModelAdmin):
+	list_display = ('title', 'category', 'url')
+
+
