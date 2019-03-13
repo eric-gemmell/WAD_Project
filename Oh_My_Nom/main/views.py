@@ -18,6 +18,7 @@ def hotrestaurants(request):
 
 def randomrecipes(request):
         recipes = []
+        names = []
         count = 0
 
         #get random numbers and pick those indices as recipes (range of how many recipes you have)
@@ -27,11 +28,10 @@ def randomrecipes(request):
                 if (count in randList):
                         url = obj.url
                         name = obj.title
-                        recipes += ["Try this: ","<a href=",url,">",name,"</a>","<br>"]
+                        recipes += [(url,name)]
                 count += 1
 
-        return HttpResponse(recipes)
-	#return render(request,"main/randomrecipes.html")
+        return render(request,"main/randomrecipes.html",{"recipes":recipes})
 
 def registersignin(request):
 	registered = False

@@ -2,6 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.staticfiles import finders
 from django import template
+from django.test import Client
+from django.contrib.auth.models import User
+from django.contrib import auth
 
 class GeneralTests(TestCase):
 	def setUp(self):
@@ -52,9 +55,7 @@ class ViewsTests(TestCase):
 	def test_myplaces_page_exists(self):
 		response = self.client.get(reverse('main:myplaces'))
 
-from django.test import Client
-from django.contrib.auth.models import User
-from django.contrib import auth
+
 class LoginRegisterTests(TestCase):
 	def setUp(self):
 		#Create a test account if it doesn't exist
@@ -128,7 +129,30 @@ class LoginRegisterTests(TestCase):
 		user = auth.get_user(c)
 		assert not user.is_authenticated	
 
+class RandomRecipeTests(TestCase):
+        
+        def setUp(self):
+                pass
 
+        def tearDown(self):
+                pass
+
+        def test_user_loggedin_url_saving_works(self):
+                #add click on recipes to saved ones of user
+                pass
+
+        def test_url_dont_repeat(self):
+                response1 = self.client.get('/randomrecipes/')
+                response2 = self.client.get('/randomrecipes/')
+                assert(response1 != response2)
+
+        def test_url_redirect_to_recipe(self):
+                #c = Client()
+                #response = c.post('/randomrecipes/')
+                #self.assertEqual(response.url,fetch_redirect_response=True)
+                pass
+
+        
 
 
 
