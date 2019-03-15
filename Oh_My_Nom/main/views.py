@@ -113,7 +113,7 @@ def random_recipe_clicked(request,title):
 				
 	return HttpResponseRedirect(url)
 	
-def show_recipe(request, slug):
+def show_recipe(request, page_name_slug):
 	try:
 		recipe = Page.objects.get(slug=slug)
 	except:

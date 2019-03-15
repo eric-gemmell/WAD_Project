@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load admin_urls %}
 <!DOCTYPE html>
 <html>
 	<head lang="en">
@@ -9,8 +10,66 @@
                         {% endblock %}
                 </title>
 
-	</head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="{% static 'images/favicon.ico' %}">
+		<title>
+			Oh My Nom - {% block title %}Oh My Nom{% endblock %}
+		</title>
+		<!-- Bootstrap core CSS -->
+		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
+		rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href=
+		"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
+		rel="stylesheet">
+		</head>
 	<body>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+	<button class="navbar-toggler navbar-toggler-right hidden-lg-up"
+		type="button"
+		data-toggle="collapse"
+		data-target="#navbar"
+		aria-controls="navbar"
+		aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="">Oh My Nom</a>
+
+	<div class="collapse navbar-collapse" id="navbar">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+			<!-- doesn't work if went to other page beforehand, have to clickk home hyperlink -->
+				<a class="nav-link" href="">
+					Home
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="hotrestaurants/">
+					hot restaurants
+				</a>
+			</li>
+			{% if user.is_authenticated %}
+			<!-- goes to random recipes page so maybe don't need actual buttom?? -->
+			<li class="nav-item">
+				<a class="nav-link" href="/randomrecipes">
+					random recipes
+				</a>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<a class="nav-link" href="registersignin/">
+					register signin
+				</a>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+	</nav>
 	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
@@ -46,4 +105,18 @@
 		</div>
 		
 	</body>
+	</div>
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+	</script>
+	<script
+		src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+	</script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script
+		src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+	</script>
 </html>
