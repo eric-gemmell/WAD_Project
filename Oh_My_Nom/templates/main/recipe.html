@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+
+{% block main_block %}
+	<div>
+	{% if page %}
+		<h1>{{ page.name }}</h1>
+	{% else %}
+		The specified page does not exist!
+	{% endif %}
+	</div>
+{% endblock %}

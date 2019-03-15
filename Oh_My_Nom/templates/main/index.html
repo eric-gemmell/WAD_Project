@@ -4,6 +4,23 @@
 	<h1>Index Page, Welcome To Oh_My_Nom!<h1/>
 	<ul>
 		<li><a href="{% url 'main:hotrestaurants' %}">Take Me Out!</a></li>
-		<li><a href="{% url 'main:randomrecipes' %}">Generate Random Recipe</a></li>
+		<!-- <li><a href="{% url 'main:randomrecipes' %}">Generate Random Recipe</a></li> -->
 	<ul/>
+	<script type="text/javascript" src="main-ajax.js"></script>
+	<script type="text/javascript">
+	</script>
+	<div>
+	
+	<!-- button has label but not working (should use AJAX in main-ajax.js file)-->
+		<button id="generate_recipes" type="button"
+		data-target='main/randomrecipes.html'>
+		Generate Random Recipes
+		</button>
+
+	<!-- button works fully, JavaScript rather than jQuery --> 
+	<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>
+	
+	
+	
+	</div>
 {% endblock %}

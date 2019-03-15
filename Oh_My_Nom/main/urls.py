@@ -13,5 +13,7 @@ urlpatterns = [
 	path("myrecipes/",views.myrecipes,name="myrecipes"),
 	path("test/",views.test,name="test"),
 	path("admin/", admin.site.urls),
+	path("recipe/slug:page_name_slug/",views.show_recipe, name='show_recipe'),
+
 ]
 

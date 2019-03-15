@@ -17,21 +17,22 @@ def hotrestaurants(request):
 	return render(request,"main/hotrestaurants.html")
 
 def randomrecipes(request):
-        recipes = []
-        names = []
-        count = 0
+		recipes = []
+		names = []
+		count = 0
 
-        #get random numbers and pick those indices as recipes (range of how many recipes you have)
-        randList = random.sample(range(0,19),3)
+		
+		#get random numbers and pick those indices as recipes (range of how many recipes you have)
+		randList = random.sample(range(0,19),3)
 
-        for obj in Page.objects.all():
-                if (count in randList):
-                        url = obj.url
-                        name = obj.title
-                        recipes += [(url,name)]
-                count += 1
-
-        return render(request,"main/randomrecipes.html",{"recipes":recipes})
+		for obj in Page.objects.all():
+			if (count in randList):
+				url = obj.url
+				name = obj.title
+				recipes += [(url,name)]
+			count += 1
+				
+		return render(request,"main/randomrecipes.html",{"recipes":recipes})
 
 def registersignin(request):
 	registered = False
@@ -97,5 +98,27 @@ def myplaces(request):
 def myrecipes(request):
 	return render(request,"main/myrecipes.html")
 
+
 def test(request):
 	return render(request,"main/test.html")
+	
+def random_recipe_clicked(request,title):
+	recipes = Page.objects.all()
+	recipe = recipes.get(title)
+	url = recipe.url
+	
+	if User.is_authenticated:
+		User.recipes = User.recipes + title
+		User.save()
+				
+	return HttpResponseRedirect(url)
+	
+def show_recipe(request, slug):
+	try:
+		recipe = Page.objects.get(slug=slug)
+	except:
+		recipe = None
+	return render(request, 'main/category.html', {"recipe":recipe})
+	
+	
+	
