@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from main.GoogleServices import GetRequestIP, GetLocationFromIP, GetLocationFromText, GetRestaurantsFromLocation 
 
 #Index is the main page of the site
 #the html document is stored in the 'templates/main' folder
@@ -11,6 +12,10 @@ def index(request):
 	return render(request,"main/index.html")
 
 def hotrestaurants(request):
+	ip = GetRequestIP()
+	print(ip)
+	location = GetLocationFromIP(ip)
+	print(location)
 	return render(request,"main/hotrestaurants.html")
 
 def randomrecipes(request):
