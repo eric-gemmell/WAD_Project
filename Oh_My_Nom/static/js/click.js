@@ -1,8 +1,9 @@
-$('#likes').click(function(){
-	var catid;
-	catid = $(this).attr("data-catid");
-	$.get('/randomrecipes/', {category_id: catid}, function(data){
-	$('#like_count').html(data);
-	$('#likes').hide();
-	});
+$('#save-recipe').click(function(){
+    var recid;
+    recid = $(this).attr("data-recid");
+    $.get('/main/save_recipe', {"recipe_id": recid}, function(data){
+               $('#save-recipe').hide();
+
+    });
+    window.alert("Recipe saved!");
 });

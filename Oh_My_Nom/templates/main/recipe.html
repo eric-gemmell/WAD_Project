@@ -1,11 +1,29 @@
 {% extends "main/base.html" %}
+{% load staticfiles %}
 
 {% block main_block %}
 	<div>
-	{% if page %}
-		<h1>{{ page.name }}</h1>
+	<script type="text/javascript"> src={% static "js/click.js" %}"></script>
+	<script type="text/javascript">
+	{% block script_block%}
+	{% endblock %}
+	</script>
+	{% if recipe %}
+		<h1>{{ recipe.title }}</h1>
+		<div>
+		<a href={{ recipe.url}}>Link to the recipe website</a>
+		{% if user.is_authenticated %}
+		<button id="save-recipe" data-recid="{{recipe.title}}">Save Recipe</button>
+		{% endif %}
+		</button>
+		</div>
+		<hr>
+		<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>
 	{% else %}
-		The specified page does not exist!
+		The specified recipe does not exist!
 	{% endif %}
 	</div>
 {% endblock %}
+	<script src="{% static "js/click.js" %}"></script>
+	<script type="text/javascript">
+	</script>

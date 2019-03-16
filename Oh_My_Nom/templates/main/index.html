@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 
 {% block main_block %}
 	<h1>Index Page, Welcome To Oh_My_Nom!<h1/>
@@ -6,10 +7,7 @@
 		<li><a href="{% url 'main:hotrestaurants' %}">Take Me Out!</a></li>
 		<!-- <li><a href="{% url 'main:randomrecipes' %}">Generate Random Recipe</a></li> -->
 	<ul/>
-	<script type="text/javascript" src="main-ajax.js"></script>
-	<script type="text/javascript">
-	</script>
-	<div>
+
 	
 	<!-- button has label but not working (should use AJAX in main-ajax.js file)-->
 	<!--	<button id="generate_recipes" type="button"
@@ -22,5 +20,8 @@
 	
 	
 	
-	</div>
+	</div> -->
 {% endblock %}
+	<script src="{% static "js/main-ajax.js" %}"></script>
+	<script type="text/javascript">
+	</script>

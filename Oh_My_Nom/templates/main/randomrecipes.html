@@ -3,18 +3,19 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<script type="text/javascript" src="main-ajax.js"></script>
+	<script type="text/javascript"> src={% static "js/main-ajax.js" %}"></script>
 	<script type="text/javascript">
 	</script>
+	
 	<p>Random Recipes You Want:<p/> 
 	<div>
-		{% for url,name in recipes %}
-			<li><a id='recipe' href={{url}}>{{name}}</a></li>
+		{% for slug,name in recipes %}
+			<li><a id='recipe' href="/recipe/{{ slug }}">{{ name }}</a></li>
 		{% endfor %}
 	</div>
 	<br>
 	
 	<a href="{% url 'main:myrecipes' %}">my saved recipes</a>
 	<!-- button works fully, JavaScript rather than jQuery --> 
-	<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button
+	<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>
 {% endblock %}

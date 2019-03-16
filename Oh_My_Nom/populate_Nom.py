@@ -4,11 +4,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Oh_My_Nom.settings')
 
 import django
 django.setup()
-from main.models import Category, Page
+from main.models import Recipe, User, SavedRecipe
 
 def populate():
-
-	recipes_pages = [
+        recipes = [
 		{"title": "Sweet Vegan Fajitas",
 		"url":"https://www.theedgyveg.com/2016/04/20/easy-vegan-fajitas-dinner-15-minutes/"},
 		{"title":"Meatballs",
@@ -54,82 +53,13 @@ def populate():
 		"url":"https://www.bbc.com/food/recipes/mary_berrys_lasagne_al_16923"},
                 
                 ]
-                
 
+def add_recipe(title, url):
+        r = Recipe.objects.get_or_create(title=title)[0]
+        r.url = url
+        r.save()
+        return r
 
-	restaurant_pages = [
-		{"title":"Paesano",
-		"url":"https://paesanopizza.co.uk/"},
-		{"title":"Topolabamba",
-		"url":"https://www.topolabamba.com/"},
-		{"title":"Ubiquitous Chip",
-		"url":"https://www.ubiquitouschip.co.uk/"},
-                
-                {"title":"Doner Haus",
-		"url":"https://www.donerhaus.uk/"},
-		{"title":"Wagamama",
-		"url":"https://www.wagamama.com/"},
-		{"title":"Kimchi Cult!",
-		"url":"http://www.kimchicult.com/"},
-
-                {"title":"Baffo",
-		"url":"https://www.baffo.co.uk/"},
-		{"title":"Eusebi Deli",
-		"url":"http://eusebideli.com/"},
-		{"title":"Brel",
-		"url":"https://www.brelbar.com/"},
-
-                {"title":"Iberica",
-		"url":"https://www.ibericarestaurants.com/"},
-		{"title":"Left Bank",
-		"url":"http://theleftbank.co.uk/"},
-		{"title":"Halloumi Glasgow",
-		"url":"http://www.halloumiglasgow.co.uk/#"},
-
-                {"title":"Bread Meats Bread",
-		"url":"http://www.breadmeatsbread.com/"},
-		{"title":"Brgr",
-		"url":"https://www.brgr-glasgow.com/"},
-
-                {"title":"Cafe Andaluz",
-		"url":"https://www.cafeandaluz.com/"},
-		{"title":"Crab Shakk",
-		"url":"http://www.crabshakk.com/"},
-		{"title":"Wudon",
-		"url":"http://www.wudon-noodlebar.co.uk/"},
-
-                {"title":"Kelvin Pocket",
-		"url":"http://kelvinpocket.co.uk/"},
-		{"title":"Roast",
-		"url":"http://www.roastglasgow.com/"},
-		{"title":"Wudon",
-		"url":"http://www.wudon-noodlebar.co.uk/"}
-                ]
-
-	cats = {"Recipes": {"pages": recipes_pages},
-		"Restaurants": {"pages": restaurant_pages},
-                }
-
-
-	for cat, cat_data in cats.items():
-		c = add_cat(cat)
-		for p in cat_data["pages"]:
-			add_page(c, p["title"], p["url"])
-
-	for c in Category.objects.all():
-		for p in Page.objects.filter(category=c):
-			print("- {0} - {1}".format(str(c), str(p)))
-
-def add_page(cat, title, url):
-	p = Page.objects.get_or_create(category=cat, title=title)[0]
-	p.url=url
-	p.save()
-	return p
-
-def add_cat(name):
-	c = Category.objects.get_or_create(name=name)[0]
-	c.save()
-	return c
 
 if __name__ == '__main__':
 	print("Starting Noms population script...")

@@ -1,7 +1,17 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Welcome to your saved recipes, note that recipes you click on are automatically added <p/> 
+	<p> Welcome to your saved recipes, note that recipes you click on are automatically added <p/>
+	<div>
+		{% for saved_recipe in saved_recipes %}
+			<li><a id='recipe' href="/recipe/{{ saved_recipe.slug }}">{{ saved_recipe.name }}</a></li>
+		{% endfor %}
+	</div>
 	<a href="{% url 'main:randomrecipes' %}">Give Me More Recipes!</a>
 {% endblock %}
+
+	<script src="{% static "js/click.js" %}"></script>
+	<script type="text/javascript">
+	</script>

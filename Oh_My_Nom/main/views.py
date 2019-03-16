@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from main.models import Category
-from main.models import Page
+from main.models import Recipe, SavedRecipe
 import random
 
 #Index is the main page of the site
@@ -20,16 +19,16 @@ def randomrecipes(request):
 		recipes = []
 		names = []
 		count = 0
-
 		
 		#get random numbers and pick those indices as recipes (range of how many recipes you have)
 		randList = random.sample(range(0,19),3)
 
-		for obj in Page.objects.all():
+		for r in Recipe.objects.all():
 			if (count in randList):
-				url = obj.url
-				name = obj.title
-				recipes += [(url,name)]
+				name = r.title
+				slug = r.slug
+				url = r.url
+				recipes += [(slug,name)]
 			count += 1
 				
 		return render(request,"main/randomrecipes.html",{"recipes":recipes})
@@ -96,29 +95,44 @@ def myplaces(request):
 
 @logged_in_or_redirect
 def myrecipes(request):
-	return render(request,"main/myrecipes.html")
+        user = request.user
+        return render(request,"main/myrecipes.html",{"savedRecipes":SavedRecipe.objects.filter(user=user)})
 
 
 def test(request):
 	return render(request,"main/test.html")
-	
-def random_recipe_clicked(request,title):
-	recipes = Page.objects.all()
-	recipe = recipes.get(title)
-	url = recipe.url
-	
-	if User.is_authenticated:
-		User.recipes = User.recipes + title
-		User.save()
-				
-	return HttpResponseRedirect(url)
-	
-def show_recipe(request, page_name_slug):
-	try:
-		recipe = Page.objects.get(slug=slug)
-	except:
-		recipe = None
-	return render(request, 'main/category.html', {"recipe":recipe})
+
+
+def save_recipe(request):
+        #add recipe to saved recipes
+        user = None
+        if request.user.is_authenticated:
+                user = request.user
+        recipe_id = None
+        
+        if request.method == "GET" and user:
+                recipe_id =  request.GET['recipe_id']
+                #recipe_id =  request.POST.get('recipe_id', False)
+                #for some reason doesn't seem to find recipe_id in request even though
+                #it should be passed in ajax click.js
+                if recipe_id:
+                        recipe = Recipe.objects.get(title=recipe_id)
+                        if recipe:
+                                s = SavedRecipe.objects.get_or_create(recipe=recipe,user=user)[0]
+                                s.save()
+                                return HttpResponse(s)
+        print("ERROR!")
+        return HttpResponse("")
+
+
+def show_recipe(request, slug):
+        context_dict = {}
+        try:
+                recipe = Recipe.objects.get(slug=slug)
+                context_dict["recipe"] = recipe
+        except Recipe.DoesNotExist:
+                context_dict["recipe"] = None
+        return render(request, 'main/recipe.html', context_dict)
 	
 	
 	
