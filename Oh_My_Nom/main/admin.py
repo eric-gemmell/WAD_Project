@@ -1,6 +1,5 @@
 from django.contrib import admin
-from main.models import UserProfile
-from main.models import PageAdmin, Recipe, SavedRecipe
+from main.models import PageAdmin, Recipe, SavedRecipe, UserProfile, Rating
 
 # Register your models here.
 
@@ -10,3 +9,4 @@ class PageAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile)
 admin.site.register(Recipe)
 admin.site.register(SavedRecipe)
+admin.site.register(Rating)

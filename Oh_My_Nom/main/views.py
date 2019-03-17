@@ -95,8 +95,18 @@ def myplaces(request):
 
 @logged_in_or_redirect
 def myrecipes(request):
-        user = request.user
-        return render(request,"main/myrecipes.html",{"savedRecipes":SavedRecipe.objects.filter(user=user)})
+        user = None
+        context_dict = {}
+        myrecipes = []
+
+        if request.user.is_authenticated:
+                user = request.user
+
+        for recipe in SavedRecipe.objects.all():
+                if recipe.user == user:
+                        myrecipes.append(recipe)
+        context_dict["myrecipes"] = myrecipes
+        return render(request, 'main/myrecipes.html', context_dict)
 
 
 def test(request):
@@ -111,12 +121,13 @@ def save_recipe(request):
         recipe_id = None
         
         if request.method == "GET" and user:
-                recipe_id =  request.GET['recipe_id']
-                #recipe_id =  request.POST.get('recipe_id', False)
+                print(request.GET)
+                recipe_id =  request.GET.get('recipe_id')
+                print(recipe_id)
                 #for some reason doesn't seem to find recipe_id in request even though
                 #it should be passed in ajax click.js
                 if recipe_id:
-                        recipe = Recipe.objects.get(title=recipe_id)
+                        recipe = Recipe.objects.get(id=int(recipe_id))
                         if recipe:
                                 s = SavedRecipe.objects.get_or_create(recipe=recipe,user=user)[0]
                                 s.save()
@@ -133,6 +144,34 @@ def show_recipe(request, slug):
         except Recipe.DoesNotExist:
                 context_dict["recipe"] = None
         return render(request, 'main/recipe.html', context_dict)
+
+@login_required
+def add_rating(request, slug):
+    try:
+        recipe = Recipe.objects.get(slug = slug)
+    except Recipe.DoesNotExist:
+        recipe = None
+    user = None
+
+    if request.user.is_authenticated:
+        user = request.user
+
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            if recipe and user:
+                comment = form.save (commit=False)
+                comment.recipe = recipe
+                comment.user = user
+                comment.save()
+                return chosen_recipe(request, recipe_slug)
+        else:
+            print(form.errors)
+
+    context_dict = {'form':form, 'recipe':recipe}
+    return render (request, 'main/add_comment.html', context_dict)
+
 	
 	
 	

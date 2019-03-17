@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib import admin
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -13,15 +14,14 @@ class UserProfile(models.Model):
 	# and that is associated here by a one to one relationship will be deleted as well.
 	user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
 	address = models.CharField(max_length=128)
-	recipes = models.CharField(max_length=500,default="")
 	
 	def __str__():
 		return self.user.username
 
 class Recipe(models.Model):
-        title = models.CharField(max_length=128)
+        title = models.CharField(max_length=128, unique=True)
         url = models.URLField()
-        slug = models.SlugField(unique=True,blank=True,null=True)
+        slug = models.SlugField(blank=True,null=True)
 
         def save(self, *args, **kwargs):
                 self.slug = slugify(self.title)
@@ -39,4 +39,24 @@ class SavedRecipe(models.Model):
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
     def __str__(self):
         return self.user.username + " saves " + self.recipe.name
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(SavedRecipe, on_delete=models.CASCADE)
+
+    date = models.DateTimeField()
+    describtion = models.CharField(max_length=100)
+    dishType = models.CharField(max_length=100)
+    price = models.CharField(max_length=100)
+    fanciness = models.CharField(max_length=100)
+    firstDate = models.CharField(max_length=100)
+    lazyNight = models.CharField(max_length=100)
+    difficulty = models.CharField(max_length=100)
+    dishType = models.CharField(max_length=100)
+    price = models.CharField(max_length=100)
+    veggie = models.CharField(max_length=100)
+    overall = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.description
 

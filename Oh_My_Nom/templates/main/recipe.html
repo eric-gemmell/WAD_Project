@@ -1,19 +1,14 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}
-
+	<script type="text/javascript" src="{% static '/js/click.js' %}"></script>
 {% block main_block %}
 	<div>
-	<script type="text/javascript"> src={% static "js/click.js" %}"></script>
-	<script type="text/javascript">
-	{% block script_block%}
-	{% endblock %}
-	</script>
 	{% if recipe %}
 		<h1>{{ recipe.title }}</h1>
 		<div>
 		<a href={{ recipe.url}}>Link to the recipe website</a>
 		{% if user.is_authenticated %}
-		<button id="save-recipe" data-recid="{{recipe.title}}">Save Recipe</button>
+			<button id="save-recipe" data-recid="{{recipe.id}}">Save Recipe</button>
 		{% endif %}
 		</button>
 		</div>
@@ -24,6 +19,4 @@
 	{% endif %}
 	</div>
 {% endblock %}
-	<script src="{% static "js/click.js" %}"></script>
-	<script type="text/javascript">
-	</script>
+
