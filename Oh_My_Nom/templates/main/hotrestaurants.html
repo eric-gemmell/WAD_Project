@@ -2,6 +2,13 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Welcome to the hot_restaurants page! <p/> 
 	<a href="{% url 'main:myplaces' %}">my saved restaurants</a>
+	<p> Welcome to the hot_restaurants page! <p/> 
+
+	<form id="location_form" method="post" action="{% url 'main:hotrestaurants' %}"enctype="multipart/form-data">
+                {% csrf_token %}
+                Optimize your location: <input type="text" name="location" value="" size="10" />
+                <input type="submit" name="submit" value="Update location"/>
+        </form>
+
 {% endblock %}
