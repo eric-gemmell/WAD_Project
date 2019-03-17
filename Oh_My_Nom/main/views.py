@@ -1,9 +1,13 @@
+#Http imports
 from django.shortcuts import render
+from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponse
+#Login and user imports
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from main.models import UserInfo
+#Hot restaurants imports
 from main.GoogleServices import  GetLocation, GetRestaurantsFromLocation 
 
 #Index is the main page of the site
@@ -35,6 +39,7 @@ def registersignin(request):
 			#This Executes when the register form has been completed
 			username = request.POST.get("registerusername")
 			password = request.POST.get("registerpassword")
+			location = request.POST.get("registerlocation")
 			try:
 				User.objects.get(username=username)
 				#The previous statement breaks the code when it cannot find the given user,
@@ -48,7 +53,12 @@ def registersignin(request):
 				#CHECK IF PASSWORD IS GOOD HERE
 				user.set_password(password)
 				user.save()
+				userInfo = UserInfo(user = user)
+				userInfo.save()
 				print("\n\n Successfully saved user\n\n")
+				if(location != None):
+					userInfo.location = location
+					userInfo.save()
 				user = authenticate(username=username, password=password)
 				if user:
 					 if user.is_active:
