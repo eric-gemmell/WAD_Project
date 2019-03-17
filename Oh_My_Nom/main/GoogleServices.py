@@ -110,10 +110,10 @@ def GetLocation(request):
 		if input_location:
 			location_dict = GetLocationFromText(address = input_location)
 			if(location_dict["status"] != "ok"):
-				print("successfully got address from text!")
+				print("could not get address from text")
 				location_message = "Sorry, but we could not find the place '{}'".format(input_location)
 			else:
-				print("could not get address from text")
+				print("successfully got address from text!")
 				return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
 	
 	#Try to get user information 
