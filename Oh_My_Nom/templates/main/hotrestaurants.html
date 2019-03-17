@@ -2,8 +2,11 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<a href="{% url 'main:myplaces' %}">my saved restaurants</a>
+	<a href="{% url 'main:myplaces' %}">See your saved restaurants!</a>
 	<p> Welcome to the hot_restaurants page! <p/> 
+	{% if location_message %}
+		<p style="white-space: pre-line">{{ location_message }}</p>
+	{% endif %}
 
 	<form id="location_form" method="post" action="{% url 'main:hotrestaurants' %}"enctype="multipart/form-data">
                 {% csrf_token %}
@@ -11,4 +14,20 @@
                 <input type="submit" name="submit" value="Update location"/>
         </form>
 
+	{% if restaurants %}
+		{% for restaurant in restaurants %}
+			<div>
+				<p><strong>{{ restaurant.name }}</strong><p>
+				<br>	
+				<img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}">	
+
+				<form id="location_form" method="post" action="{% url 'main:hotrestaurantclicked' %}"enctype="multipart/form-data">
+                			{% csrf_token %}
+					<input id="place_id" name="place_id" type="hidden" value="{{ restaurant.place_id }}">
+					<input id="google_url" name="google_url" type="hidden" value="{{ restaurant.google_url }}">
+                			<input type="submit" name="submit" value="More Information"/>
+        			</form>
+			</div>
+		{% endfor %}
+	{% endif %}
 {% endblock %}

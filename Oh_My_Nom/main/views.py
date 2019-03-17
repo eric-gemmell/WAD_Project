@@ -19,14 +19,25 @@ def hotrestaurants(request):
 	#First part is that a location is needed to get the restaurants near that location
 	# otherwise everything fails
 	context_dict = {}
-
 	location_dict = GetLocation(request)
 	print(location_dict)
 	context_dict["location_message"] = location_dict["location_message"]
 
 	restaurants = GetRestaurantsFromLocation(location = location_dict["location"])
-	print(restaurants)
+	context_dict["restaurants"] = restaurants
 	return render(request,"main/hotrestaurants.html", context = context_dict)
+
+def hotrestaurantclicked(request):
+	if request.method == "POST":
+		google_url = request.POST.get("google_url")
+		place_id = request.POST.get("place_id")
+		print("restaurant clicked! ;",place_id,google_url)
+		if(google_url == None or place_id == None):
+			return HttpResponse("Something went wrong")
+		#do user adding restaurant stuff here
+		return HttpResponseRedirect(google_url)
+	else:
+		return HttpResponseRedirect(reverse('main:hotrestaurants'))
 
 def randomrecipes(request):
 	return render(request,"main/randomrecipes.html")

@@ -62,8 +62,8 @@ def RestaurantInfoDictFromGoogleResponse(GoogleResponse):
     result["name"] = GoogleResponse["name"]
     result["address"] = GoogleResponse["vicinity"]
     result["google_url"] = "https://www.google.com/maps/place/?q=place_id:{}".format(GoogleResponse["place_id"])
-    
-    result["image_url"] = "ImageMissing!"
+    result["place_id"] = GoogleResponse["place_id"]    
+    result["image_url"] = "/static/images/main.png"
     if("photos" in GoogleResponse):
         photo_reference = GoogleResponse["photos"][0]["photo_reference"]
         result["image_url"] = ("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400"
@@ -110,32 +110,40 @@ def GetLocation(request):
 		if input_location:
 			location_dict = GetLocationFromText(address = input_location)
 			if(location_dict["status"] != "ok"):
-				print("could not get address from text")
 				location_message = "Sorry, but we could not find the place '{}'".format(input_location)
 			else:
-				print("successfully got address from text!")
 				return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
 	
 	#Try to get user information 
 	if request.user.is_authenticated:
-		print("user is authenticated, trying to get user location")
-		#get user location here
-		#if user has no associated location, request he add an address
-	
+		input_location = request.user.userinfo.location
+		if(input_location != ""):
+			location_dict = GetLocationFromText(address = input_location)
+			if(location_dict["status"] != "ok"):
+				if(location_message == ""):
+					location_message = "Sorry, but your saved address '{}' could not be found".format(input_location)
+				else:
+					location_message += "\nYour saved address '{}' couldn't be found either".format(input_location)	
+			else:
+				return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
+		else:
+			if (location_message == ""):
+				location_message = "No address is saved under this account"
+			else:
+				location_message +="\nNor is there any address saved in this account"
+
 	#lastly use ip to get address
 	ip = GetRequestIP(request)
 	location_dict = GetLocationFromIP(ipAddress = ip)
 	if(location_dict["status"] != "ok"):
-		print("Could not get ip address location! using default")
 		#Ip failed us so using default address
 		location_dict = GetLocationFromText()
 		if location_message != "":
-			location_message += "\nWe couldn't estimate your location, so we are using the default '{}'".format(location_dict["address"])
+			location_message += "\nWe also couldn't estimate your location, so we are using the default '{}'".format(location_dict["address"])
 		else:
 			location_message = "We could not estimate your location, we are using the default '{}'".format(location_dict["address"])
 		return {"location":location_dict["location"],"location_message":location_message}
 	else:
-		print("Got address from IP!")
 		return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
 
 
