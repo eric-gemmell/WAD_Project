@@ -7,10 +7,11 @@
 		<h1>{{ recipe.title }}</h1>
 		<div>
 		<a href={{ recipe.url}}>Link to the recipe website</a>
-		{% if user.is_authenticated %}
-			<button id="save-recipe" data-recid="{{recipe.id}}">Save Recipe</button>
-		{% endif %}
-		</button>
+			<form id="location_form" method="post" action="{% url 'main:save_recipe' %}"enctype="multipart/form-data">
+					{% csrf_token %}
+					<input id="recipe_title" name="recipe_title" type="hidden" value="{{ recipe.title }}">
+                	<input type="submit" name="submit" value="Save Recipe!"/>
+        	</form>
 		</div>
 		<hr>
 		<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>

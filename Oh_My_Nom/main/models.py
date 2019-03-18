@@ -30,15 +30,20 @@ class Recipe(models.Model):
         def __str__(self):
                 return self.title
 
+
+
 class PageAdmin(admin.ModelAdmin):
 	list_display = ('title','url')
 	
 
+
 class SavedRecipe(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
+
     def __str__(self):
-        return self.user.username + " saves " + self.recipe.name
+        return self.user.username + " saves " + self.recipe.title
+
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

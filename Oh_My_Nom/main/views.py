@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from main.models import Recipe, SavedRecipe
@@ -112,28 +112,29 @@ def myrecipes(request):
 def test(request):
 	return render(request,"main/test.html")
 
-
+@logged_in_or_redirect
 def save_recipe(request):
-        #add recipe to saved recipes
-        user = None
-        if request.user.is_authenticated:
-                user = request.user
-        recipe_id = None
+        print("OMG")
         
-        if request.method == "GET" and user:
-                print(request.GET)
-                recipe_id =  request.GET.get('recipe_id')
-                print(recipe_id)
-                #for some reason doesn't seem to find recipe_id in request even though
-                #it should be passed in ajax click.js
-                if recipe_id:
-                        recipe = Recipe.objects.get(id=int(recipe_id))
-                        if recipe:
-                                s = SavedRecipe.objects.get_or_create(recipe=recipe,user=user)[0]
-                                s.save()
-                                return HttpResponse(s)
-        print("ERROR!")
-        return HttpResponse("")
+        if request.method == "POST":
+                print("Got a post request")
+                recipe_title =  request.POST.get('recipe_title')
+        
+                print(recipe_title)
+                if (recipe_title==None):
+                        print("recipe not found... this shouldnt happen")
+                        return HttpResponseNotFound("Go back")
+       
+                recipe = get_object_or_404(Recipe,title=recipe_title)
+                print("Got da sweet recipe, gonna save it to the database")
+                s = SavedRecipe.objects.get_or_create(recipe=recipe,user=request.user)[0]
+                print("saving recipe object: ",s)
+                s.save()
+                print("saved the recipe, WELL DONE")
+                return HttpResponseRedirect(recipe.url)
+        else:
+                print("ERROR!")
+                return HttpResponse("")
 
 
 def show_recipe(request, slug):
@@ -171,7 +172,3 @@ def add_rating(request, slug):
 
     context_dict = {'form':form, 'recipe':recipe}
     return render (request, 'main/add_comment.html', context_dict)
-
-	
-	
-	
