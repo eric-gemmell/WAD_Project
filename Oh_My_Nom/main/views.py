@@ -20,7 +20,6 @@ def hotrestaurants(request):
 	# otherwise everything fails
 	context_dict = {}
 	location_dict = GetLocation(request)
-	print(location_dict)
 	context_dict["location_message"] = location_dict["location_message"]
 
 	restaurants = GetRestaurantsFromLocation(location = location_dict["location"])
@@ -31,7 +30,7 @@ def hotrestaurantclicked(request):
 	if request.method == "POST":
 		google_url = request.POST.get("google_url")
 		place_id = request.POST.get("place_id")
-		print("restaurant clicked! ;",place_id,google_url)
+		#print("restaurant clicked! ;",place_id,google_url)
 		if(google_url == None or place_id == None):
 			return HttpResponse("Something went wrong")
 		#do user adding restaurant stuff here
@@ -66,7 +65,7 @@ def registersignin(request):
 				user.save()
 				userInfo = UserInfo(user = user)
 				userInfo.save()
-				print("\n\n Successfully saved user\n\n")
+				#print("\n\n Successfully saved user\n\n")
 				if(location != None):
 					userInfo.location = location
 					userInfo.save()
@@ -88,7 +87,7 @@ def registersignin(request):
 				else:
 					context_dict["signin_error"] = "Your account is disabled"
 			else:
-				print("Invalid login details: {0}, {1}".format(username, password))
+				#print("Invalid login details: {0}, {1}".format(username, password))
 				context_dict["signin_error"] = "Incorrect login details"
 		
 	return render(request,"main/registersignin.html",context = context_dict)

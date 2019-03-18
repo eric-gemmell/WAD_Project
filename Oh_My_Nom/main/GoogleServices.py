@@ -116,7 +116,11 @@ def GetLocation(request):
 	
 	#Try to get user information 
 	if request.user.is_authenticated:
-		input_location = request.user.userinfo.location
+		try:
+			input_location = request.user.userinfo.location
+		except:
+			input_location = ""
+
 		if(input_location != ""):
 			location_dict = GetLocationFromText(address = input_location)
 			if(location_dict["status"] != "ok"):
