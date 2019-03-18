@@ -130,7 +130,7 @@ def save_recipe(request):
                 s = SavedRecipe.objects.get_or_create(recipe=recipe,user=request.user)[0]
                 print("saving recipe object: ",s)
                 s.save()
-                print("saved the recipe, WELL DONE")
+                print("saved the recipe, WELL DONE!")
                 return HttpResponseRedirect(recipe.url)
         else:
                 print("ERROR!")
