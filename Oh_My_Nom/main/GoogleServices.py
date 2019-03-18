@@ -81,6 +81,19 @@ def GetRestaurantsFromLocation(location = ['55.8723715', '-4.2826219']):
             result.append(RestaurantInfoDictFromGoogleResponse(RestaurantInfo))
         return result
 
+def GetRestaurantFromPlace_ID(place_id = "ChIJxwP9GjJEiEgRps-HjBk6lPk"):
+	#returns a dictionary containing, an image url, a name, the address, the place_id, the google_maps url
+	#and a status code indicating all is okay
+	url = ("https://maps.googleapis.com/maps/api/place/details/json?placeid={}"
+		"&fields=name,vicinity,photo,place_id&key={}").format(place_id,GOOGLE_MAPS_TOKEN)
+	response = requests.get(url)
+	response_dict = response.json()
+	result = RestaurantInfoDictFromGoogleResponse(response["result"])
+	if(result == None):
+		return {"status":"not ok"}
+	else:
+		result["status"] = "ok"
+		return result 
 
 def GetRequestIP(request):
 	ip, is_routable = get_client_ip(request)
