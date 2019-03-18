@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from main.models import UserInfo
 #Hot restaurants imports
 from main.GoogleServices import  GetLocation, GetRestaurantsFromLocation 
+from main.models import Restaurant
+
 
 #Index is the main page of the site
 #the html document is stored in the 'templates/main' folder
@@ -30,9 +32,13 @@ def hotrestaurantclicked(request):
 	if request.method == "POST":
 		google_url = request.POST.get("google_url")
 		place_id = request.POST.get("place_id")
-		#print("restaurant clicked! ;",place_id,google_url)
+		print("restaurant clicked! ;",place_id,google_url)
 		if(google_url == None or place_id == None):
 			return HttpResponse("Something went wrong")
+		if(request.user.is_authenticated):
+			restaurant = Restaurant(user = request.user,place_id=place_id)
+			restaurant.save()
+			print("saved restaurant: ",restaurant)			
 		#do user adding restaurant stuff here
 		return HttpResponseRedirect(google_url)
 	else:
