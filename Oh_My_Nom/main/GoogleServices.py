@@ -123,13 +123,16 @@ def GetLocation(request):
 			json_dict = json.loads(request.body.decode("utf-8"))
 		except:
 			return {"error":"poor request"}
-
+		
 		if("location_text" in json_dict):
-			location_dict = GetLocationFromText(address = json_dict["location_text"])
-			if(location_dict["status"] != "ok"):
-				location_message = "Sorry, but we could not find the place '{}'".format(json_dict["location_text"])
-			else:
-				return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
+			print(json_dict["location_text"])
+			print(type(json_dict["location_text"]))
+			if(json_dict["location_text"] != "undefined"):
+				location_dict = GetLocationFromText(address = json_dict["location_text"])
+				if(location_dict["status"] != "ok"):
+					location_message = "Sorry, but we could not find the place '{}'".format(json_dict["location_text"])
+				else:
+					return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
 	
 	#Try to get user information 
 	if request.user.is_authenticated:

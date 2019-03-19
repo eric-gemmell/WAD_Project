@@ -6,13 +6,14 @@ console.log("Javascript is Running! YAY!");
 //THESE ARE THE 4 EVENTS THAT ARE HANDLED
 window.onload = function(){
 	console.log("Document has Loaded!");
-//	GetLocation();
-
+	GetLocation();
+	document.getElementById("more_information").style.display = "none";
 }
 
 function UpdateLocation(){
 	console.log("Update Location Pressed!");
 	GetLocation(document.getElementById("location_text").value);
+	document.getElementById("more_information").style.display = "none";
 }
 
 function NextRestaurant(){
@@ -31,6 +32,7 @@ function NextRestaurant(){
 		document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name;
 		document.getElementById("restaurant_image").src = RESTAURANTS[INDEX].image_url;
 		document.getElementById("restaurant_address").innerHTML = RESTAURANTS[INDEX].address;
+		document.getElementById("more_information").style.display = "block";
 	}	
 }
 function RestaurantClicked(){

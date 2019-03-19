@@ -134,5 +134,13 @@ def myplaces(request):
 def myrecipes(request):
 	return render(request,"main/myrecipes.html")
 
+def getmyplaces(request):
+	if(request.user.is_authenticated):
+		if(request.method == "POST"):
+			json_dict = json.loads(request.body.decode("utf-8"))
+			if("page" in json_dict):
+				if(json_dict["page"] != "undefined"):
+					pass					
+	return JsonResponse({"error":"unacceptable request")
 def test(request):
 	return render(request,"main/test.html")
