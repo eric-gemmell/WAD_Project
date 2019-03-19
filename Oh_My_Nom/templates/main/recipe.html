@@ -13,8 +13,10 @@
                 	<input type="submit" name="submit" class="btn btn-lg btn-secondary" value="Save Recipe!"/>
         	</form>
 		</div>
+		{% if message %}
+			<div> {{ message }} </div>
+		{% endif %}
 		<hr>
-		
 		<a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Generate Random Recipes</a>
 	{% else %}
 		The specified recipe does not exist!

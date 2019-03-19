@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from main.models import Recipe, SavedRecipe
 import random
+from main.forms import RatingForm
 
 #Index is the main page of the site
 #the html document is stored in the 'templates/main' folder
@@ -124,27 +125,28 @@ def test(request):
 
 @logged_in_or_redirect
 def save_recipe(request):
-        print("OMG")
-        
-        if request.method == "POST":
-                print("Got a post request")
-                recipe_title =  request.POST.get('recipe_title')
-        
-                print(recipe_title)
-                if (recipe_title==None):
-                        print("recipe not found... this shouldnt happen")
-                        return HttpResponseNotFound("Go back")
-       
-                recipe = get_object_or_404(Recipe,title=recipe_title)
-                print("Got da sweet recipe, gonna save it to the database")
-                s = SavedRecipe.objects.get_or_create(recipe=recipe,user=request.user)[0]
-                print("saving recipe object: ",s)
-                s.save()
-                print("saved the recipe, WELL DONE!")
-                return HttpResponseRedirect(recipe.url)
-        else:
-                print("ERROR!")
-                return HttpResponse("")
+	context_dict = {}
+	print("OMG")
+	if request.method == "POST":
+		print("Got a post request")
+		recipe_title =  request.POST.get('recipe_title')
+		print(recipe_title)
+		if (recipe_title==None):
+			print("recipe not found... this shouldnt happen")
+			return HttpResponseNotFound("Go back")
+			
+		recipe = get_object_or_404(Recipe,title=recipe_title)
+		print("Got da sweet recipe, gonna save it to the database")
+		s = SavedRecipe.objects.get_or_create(recipe=recipe,user=request.user)[0]
+		print("saving recipe object: ",s)
+		s.save()
+		print("saved the recipe, WELL DONE!")
+		context_dict["recipe"] = recipe
+		context_dict["message"] = "Recipe saved!"
+		return render(request, "main/recipe.html", context_dict)
+	else:
+		print("ERROR!")
+		return HttpResponse("")
 
 
 def show_recipe(request, slug):
@@ -157,28 +159,11 @@ def show_recipe(request, slug):
         return render(request, 'main/recipe.html', context_dict)
 
 @login_required
-def add_rating(request, slug):
-    try:
-        recipe = Recipe.objects.get(slug = slug)
-    except Recipe.DoesNotExist:
-        recipe = None
-    user = None
-
-    if request.user.is_authenticated:
-        user = request.user
-
-    form = CommentForm()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            if recipe and user:
-                comment = form.save (commit=False)
-                comment.recipe = recipe
-                comment.user = user
-                comment.save()
-                return chosen_recipe(request, recipe_slug)
-        else:
-            print(form.errors)
-
-    context_dict = {'form':form, 'recipe':recipe}
-    return render (request, 'main/add_comment.html', context_dict)
+def add_rating(request):
+	print("1st step")
+	
+	if request.method == "POST":
+		print("Got post request")
+		recipe_rating = request.POST.get('recipe_rating')
+		
+		
