@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block main_block %}
-	<strong>register here!</strong><br />
+	<h2>Register Here:</h2>
 	{% if register_error %}
 		<p>{{ register_error }}<p/>
 	{% endif %}
@@ -12,11 +12,11 @@
 		<br />
 		Password: <input type="password" name="registerpassword" value="" size="50" />
 		<br />	
-		<input type="submit" name="submit" value="Register" />
+		<input type="submit" name="submit" class="btn btn-lg btn-secondary" value="Register" />
 	</form>
 	<br />
 	<br />
-	<strong>Or Sign In!</strong>
+	<h2>Or Sign In!</h2>
 	{% if signin_error %}
 		<p>{{ signin_error }}<p/>
 	{% endif %}
@@ -26,7 +26,7 @@
 		<br />
 		Password: <input type="password" name="signinpassword" value="" size="50" />
 		<br />
-		<input type="submit" value="Sign In" />
+		<input type="submit" class="btn btn-lg btn-secondary" value="Sign In" />
 	</form>
 
 {% endblock %} 

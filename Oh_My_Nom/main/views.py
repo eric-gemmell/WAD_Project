@@ -21,7 +21,7 @@ def randomrecipes(request):
 		count = 0
 		
 		#get random numbers and pick those indices as recipes (range of how many recipes you have)
-		randList = random.sample(range(0,19),3)
+		randList = random.sample(range(0,19),5)
 
 		for r in Recipe.objects.all():
 			if (count in randList):
@@ -41,6 +41,10 @@ def registersignin(request):
 			#This Executes when the register form has been completed
 			username = request.POST.get("registerusername")
 			password = request.POST.get("registerpassword")
+			if " " in username:
+				print("it's wrong")
+				context_dict["register_error"] = "Cannot have a space in username. Try again:"
+				return render(request,"main/registersignin.html",context = context_dict)
 			try:
 				User.objects.get(username=username)
 				#The previous statement breaks the code when it cannot find the given user,

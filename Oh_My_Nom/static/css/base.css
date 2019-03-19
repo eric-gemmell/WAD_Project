@@ -43,6 +43,11 @@ p{
 	font-weight:bold;
 	font-size:30px;
 }
+
+a.link{
+	font-size:40px;
+}
+
 div.recipes{
 	
 	font-weight:bold;
