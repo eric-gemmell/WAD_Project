@@ -2,25 +2,15 @@
 {% load staticfiles %}
 
 {% block main_block %}
-	<h1>Index Page, Welcome To Oh_My_Nom!<h1/>
-	<ul>
-		<li><a href="{% url 'main:hotrestaurants' %}">Take Me Out!</a></li>
-		<!-- <li><a href="{% url 'main:randomrecipes' %}">Generate Random Recipe</a></li> -->
-	<ul/>
+	<div class="inner cover">
+        <h1 class="cover-heading">Oh My Nom</h1>
+        <p class="lead">Feed me I'm hungry!</p>
+        <p class="lead">
+        <a href="{% url 'main:hotrestaurants' %}" class="btn btn-lg btn-secondary">Take Me Out!</a>
+		<a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Generate Random Recipes</a>
+        </p>
+    </div>
 
-	
-	<!-- button has label but not working (should use AJAX in main-ajax.js file)-->
-	<!--	<button id="generate_recipes" type="button"
-		data-target='main/randomrecipes.html'>
-		Generate Random Recipes
-		</button>
-
-	<!-- button works fully, JavaScript rather than jQuery --> 
-	<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>
-	
-	
-	
-	</div> -->
 {% endblock %}
 	<script src="{% static "js/main-ajax.js" %}"></script>
 	<script type="text/javascript">

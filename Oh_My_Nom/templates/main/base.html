@@ -3,12 +3,6 @@
 <!DOCTYPE html>
 <html>
 	<head lang="en">
-		<meta charset="UTF-8" />
- 		<title>
-                        Oh_My_Nom!
-                        {% block title_block %}
-                        {% endblock %}
-                </title>
 
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,58 +10,39 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="icon" href="{% static 'images/favicon.ico' %}">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<title>
-			Oh My Nom - {% block title %}Oh My Nom{% endblock %}
+			{% block title %}Oh My Nom{% endblock %}
 		</title>
 		<!-- Bootstrap core CSS -->
 		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
 		rel="stylesheet">
 		<!-- Custom styles for this template -->
+		<link href="{% static 'css/base.css' %}" rel="stylesheet">
 		<link href=
 		"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
 		rel="stylesheet">
 		</head>
 	<body>
-	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<button class="navbar-toggler navbar-toggler-right hidden-lg-up"
-		type="button"
-		data-toggle="collapse"
-		data-target="#navbar"
-		aria-controls="navbar"
-		aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<a class="navbar-brand" href="">Oh My Nom</a>
+	<div class="site-wrapper">
 
-	<div class="collapse navbar-collapse" id="navbar">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-			<!-- doesn't work if went to other page beforehand, have to clickk home hyperlink -->
-				<a class="nav-link" href="">
-					Home
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="hotrestaurants/">
-					hot restaurants
-				</a>
-			</li>
-			{% if user.is_authenticated %}
-			<!-- goes to random recipes page so maybe don't need actual buttom?? -->
-			<li class="nav-item">
-				<a class="nav-link" href="/randomrecipes">
-					random recipes
-				</a>
-			</li>
-			{% else %}
-			<li class="nav-item">
-				<a class="nav-link" href="registersignin/">
-					register signin
-				</a>
-			</li>
-			{% endif %}
-		</ul>
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="{% url 'main:index' %}">Home</a>
+                <a class="nav-link" href="{% url 'main:registersignin' %}">Log in/Register</a>
+				{% if user.is_authenticated %}
+				<a class="nav-link" href="{% url 'main:signout' %}">Logout</a>
+				{% endif %}
+                <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Contact</a>
+              </nav>
+            </div>
+          </div>
+	
 	</div>
 	</nav>
 	
@@ -76,15 +51,6 @@
 		<!-- If you are using Bootstrap, then scroll to the bottom of the template code, You will see the JQuery -->
 		<!-- library being imported at the end. You can then add a link to rango-ajax.js after the JQuery library import (chapter 17.1 --> 
 	</script>
-
-		<div>
-			<!-- This part corresponds to the top section of the html, IT IS INTENDED TO BE UPLOADED in some form that is beyond me at the moment -->
-			<a href="{% url 'main:index' %}">Home Page</a>
-			<!-- Meant to change to detect if we are logged in but that is beyond me atm -->
-			<a href="{% url 'main:registersignin' %}">Log In or Register!</a>
-			<a href="{% url "main:signout" %}">Logout</a>
-			<br />
-		<div/>
 		<div>
 			{% if user.is_authenticated %}
 				Welcome {{ user.username }}.
@@ -92,18 +58,13 @@
 		<div/>
 		<div>
                         {% block main_block %}
-                                <div><strong>Normally Content Should be here... but since it isn't how about this instead?</strong></br></div> 
-								<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Main Content Page</a>
+                                
                         {% endblock%}
         </div>
-		<div>
-			<ul>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Invest in Oh_My_Nom!</a></li>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">About us</a></li>
-				<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Careers</a></li>
-			</ul>
-		</div>
-		
+	
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</body>
 	</div>
 	<!-- Bootstrap core JavaScript
@@ -119,4 +80,5 @@
 	<script
 		src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
 	</script>
+
 </html>

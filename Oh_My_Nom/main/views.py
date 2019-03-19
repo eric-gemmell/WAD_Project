@@ -95,18 +95,24 @@ def myplaces(request):
 
 @logged_in_or_redirect
 def myrecipes(request):
-        user = None
-        context_dict = {}
-        myrecipes = []
-
-        if request.user.is_authenticated:
-                user = request.user
-
-        for recipe in SavedRecipe.objects.all():
-                if recipe.user == user:
-                        myrecipes.append(recipe)
-        context_dict["myrecipes"] = myrecipes
-        return render(request, 'main/myrecipes.html', context_dict)
+	user = None
+	myrecipes = []
+	user = request.user
+	
+	for recipe in SavedRecipe.objects.all():
+		rList = str(recipe).split(" ")
+		rec = rList[2:]
+		strR = ""
+		for el in rec:
+			strR = strR +" " + el
+		result = strR[1:]
+		for original in Recipe.objects.all():
+			if (result == original.title):
+				if recipe.user == user:
+					name = original.title
+					slug = original.slug
+					myrecipes += [(slug,name)]
+	return render(request, 'main/myrecipes.html', {"myrecipes":myrecipes})
 
 
 def test(request):
