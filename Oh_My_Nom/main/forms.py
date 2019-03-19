@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from main.models import UserProfile
 import datetime
-from main.models import Recipe, Rating, UserProfile, Rating
+from main.models import Recipe, Rating
 from django.contrib.auth.models import User
 
 class RatingForm(forms.ModelForm):

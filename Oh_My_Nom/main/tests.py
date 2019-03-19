@@ -110,13 +110,16 @@ class LoginRegisterTests(TestCase):
 	def test_registersignin_page_register_creates_new_user_and_sign_you_in(self):
 		c = Client()
 		user = auth.get_user(c)
-		assert (not user.is_authenticated)
+		a = (not user.is_authenticated)
 		response = c.post("/registersignin/",{"registerusername":"test2","registerpassword":"test"})
 		user = auth.get_user(c)
-		assert user.is_authenticated
-		assert (user.username == "test2")
+		b = user.is_authenticated
+		c = (user.username == "test2")
 		u = User.objects.get(username = "test2")
 		u.delete()
+		assert a
+		assert b
+		assert c
 		
 	def test_signout_page_succesfully_logs_out(self):
 		c = Client()
@@ -128,6 +131,16 @@ class LoginRegisterTests(TestCase):
 		c.get("/signout/")
 		user = auth.get_user(c)
 		assert not user.is_authenticated	
+
+	def test_registersignin_page_has_empty_string_as_default_location(self):
+		c = Client()
+		response = c.post("/registersignin/",{"registerusername":"test2","registerpassword":"test"})
+		user = auth.get_user(c)
+		a = (user.userinfo.location == "")	
+		u = User.objects.get(username = "test2")
+		u.delete()
+		assert a
+
 
 class RandomRecipeTests(TestCase):
         
@@ -152,15 +165,65 @@ class RandomRecipeTests(TestCase):
                 #self.assertEqual(response.url,fetch_redirect_response=True)
                 pass
 
-        
 
+def CreateUser(username = "test",password = "test"):
+	try:
+		u = User.objects.get(username=username)
+		#This code breaks if the user doesn't exist 
+		u.set_password(password)
+		u.save()
+		
+	except:	
+		u=User(username=username)
+		u.save()
+		u.set_password(password)
+		u.save()
+	finally:
+		return u
+	
+def DeleteUser(user):
+	user.delete()
 
-
-
-
-
-
-
+from main.models import UserInfo
+class HotRestaurantTests(TestCase):
+	def setUp(self):
+		#Create a test account if it doesn't exist
+		try:
+			u = User.objects.get(username="test")
+			#This code breaks if the user doesn't exist 
+			u.set_password('test')
+			u.save()
+			
+		except:	
+			u=User(username="test")
+			u.save()
+			u.set_password('test')
+			u.save()
+		finally:
+			info = UserInfo(user = u,location = "test")
+			info.save()
+	
+	def tearDown(self):
+		try:
+			u = User.objects.get(username = "test")
+			u.delete()
+		except:
+			pass
+	
+	def test_hotrestaurants_returns_restaurant_information_always(self):
+		c = Client()
+		c.login(username="test",password="test")
+		response = c.get("/hotrestaurants/")
+		assert (len(response.context["restaurants"]) > 1)
+		u = CreateUser(username = "test2",password="test")		
+		info = UserInfo(user = u, location = "G128NU")
+		c.login(username="test2",password="test")
+		response = c.get("/hotrestaurants/")
+		assert (len(response.context["restaurants"]) > 1)
+		c.logout()	
+		response = c.get("/hotrestaurants/")
+		assert (len(response.context["restaurants"]) > 1)
+		
 
 
 
