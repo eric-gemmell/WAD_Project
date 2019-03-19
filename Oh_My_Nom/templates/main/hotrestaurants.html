@@ -2,6 +2,6 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Welcome to the hot_restaurants page! <p/> 
-	<a href="{% url 'main:myplaces' %}">My saved restaurants</a>
+	<h2> Hot restaurants:</h2> 
+	<a href="{% url 'main:myplaces' %}"class="btn btn-lg btn-secondary">My saved restaurants</a>
 {% endblock %}

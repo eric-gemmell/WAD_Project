@@ -17,8 +17,11 @@
 	</div>
 	<br>
 	
-	
+	{% if user.is_authenticated %}
+
         <a href="{% url 'main:myrecipes' %}" class="btn btn-lg btn-secondary">My Recipes</a>
-	<!-- button works fully, JavaScript rather than jQuery --> 
+		{% endif %}			
+		
+		
 		<a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Generate Random Recipes</a>
 {% endblock %}
