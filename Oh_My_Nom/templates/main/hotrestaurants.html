@@ -1,33 +1,31 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
 	<a href="{% url 'main:myplaces' %}">See your saved restaurants!</a>
-	<p> Welcome to the hot_restaurants page! <p/> 
-	{% if location_message %}
-		<p style="white-space: pre-line">{{ location_message }}</p>
-	{% endif %}
+	
+	<p id="location_message" style="white-space: pre-line"></p>
 
-	<form id="location_form" method="post" action="{% url 'main:hotrestaurants' %}"enctype="multipart/form-data">
-                {% csrf_token %}
-                Optimize your location: <input type="text" name="location" value="" size="10" />
-                <input type="submit" name="submit" value="Update location"/>
-        </form>
+	{% csrf_token %}
+	Optimize your location: <input id="location_text" type="text" name="location" value="" size="10" />
+	<button onclick="UpdateLocation()">Update Location</button>
+	<br>
+	
+	<div id="restaurant">
+	<strong><p id="restaurant_name"></p></strong>
+	<br>	
+	<img id="restaurant_image" src="">	
+	<br>
+	<strong><p id="restaurant_address"></p></strong>	
+	<br>
+	<button onclick="RestaurantClicked()">More Information!</button>
+	</div>
 
-	{% if restaurants %}
-		{% for restaurant in restaurants %}
-			<div>
-				<p><strong>{{ restaurant.name }}</strong><p>
-				<br>	
-				<img src="{{ restaurant.image_url }}" alt="{{ restaurant.name }}">	
+	<div>
+	<button id="next_restaurant" onclick="NextRestaurant()">Another!</button>
+	</div>
 
-				<form id="location_form" method="post" action="{% url 'main:hotrestaurantclicked' %}"enctype="multipart/form-data">
-                			{% csrf_token %}
-					<input id="place_id" name="place_id" type="hidden" value="{{ restaurant.place_id }}">
-					<input id="google_url" name="google_url" type="hidden" value="{{ restaurant.google_url }}">
-                			<input type="submit" name="submit" value="More Information"/>
-        			</form>
-			</div>
-		{% endfor %}
-	{% endif %}
+	<script src="{% static "js/hotrestaurants.js" %}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 {% endblock %}

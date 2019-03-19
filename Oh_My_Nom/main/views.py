@@ -2,6 +2,8 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
+import json
 #Login and user imports
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -17,30 +19,45 @@ from main.models import Restaurant
 def index(request):
 	return render(request,"main/index.html")
 
-def hotrestaurants(request):
-	#First part is that a location is needed to get the restaurants near that location
-	# otherwise everything fails
-	context_dict = {}
-	location_dict = GetLocation(request)
-	context_dict["location_message"] = location_dict["location_message"]
+def getlocation(request):
+	#get location stuff here
+	return JsonResponse(GetLocation(request))
+	
+def getrestaurants(request):
+	if request.method == "POST":
+		try:
+			json_dict = json.loads(request.body.decode('utf-8'))
+		except:
+			return JsonResponse({"error":"poor request"})
 
-	restaurants = GetRestaurantsFromLocation(location = location_dict["location"])
-	context_dict["restaurants"] = restaurants
-	return render(request,"main/hotrestaurants.html", context = context_dict)
+		if("location" not in json_dict):
+			return JsonResponse({"error":"no location associated to request"})
+		location = json_dict["location"]
+		restaurants = GetRestaurantsFromLocation(location = location)
+		status = "ok" if (len(restaurants) > 0) else "not ok"
+		return JsonResponse({"restaurants":restaurants,"status":status})
+
+	return JsonResponse({"error":"incorrect request type, please use post..."})
+
+def hotrestaurants(request):
+	return render(request,"main/hotrestaurants.html")
 
 def hotrestaurantclicked(request):
 	if request.method == "POST":
-		google_url = request.POST.get("google_url")
-		place_id = request.POST.get("place_id")
-		print("restaurant clicked! ;",place_id,google_url)
-		if(google_url == None or place_id == None):
-			return HttpResponse("Something went wrong")
+		try:
+			json_dict = json.loads(request.body.decode('utf-8'))
+		except:
+			return HttpResponse("Poor Json request object")
+		if("place_id" not in json_dict):
+			return HttpResponse("Incorrect parameters in json")
+		print(json_dict)
+		print("restaurant clicked! ;",json_dict["place_id"])
 		if(request.user.is_authenticated):
-			restaurant = Restaurant(user = request.user,place_id=place_id)
+			restaurant = Restaurant(user = request.user,place_id=json_dict["place_id"])
 			restaurant.save()
 			print("saved restaurant: ",restaurant)			
 		#do user adding restaurant stuff here
-		return HttpResponseRedirect(google_url)
+		return JsonResponse({"status":"ok"})
 	else:
 		return HttpResponseRedirect(reverse('main:hotrestaurants'))
 

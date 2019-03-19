@@ -110,7 +110,7 @@ def GetRequestIP(request):
 		pass
 	return ip
 
-
+import json
 def GetLocation(request):
 	#returns a dictionary containing the location in latitude and longitude
 	#and a message describing the location and whether we were succesful in getting it or not
@@ -119,11 +119,15 @@ def GetLocation(request):
 	
 	#try to get location from text input
 	if request.method == "POST":
-		input_location = request.POST.get("location")
-		if input_location:
-			location_dict = GetLocationFromText(address = input_location)
+		try:
+			json_dict = json.loads(request.body.decode("utf-8"))
+		except:
+			return {"error":"poor request"}
+
+		if("location_text" in json_dict):
+			location_dict = GetLocationFromText(address = json_dict["location_text"])
 			if(location_dict["status"] != "ok"):
-				location_message = "Sorry, but we could not find the place '{}'".format(input_location)
+				location_message = "Sorry, but we could not find the place '{}'".format(json_dict["location_text"])
 			else:
 				return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
 	
@@ -162,7 +166,6 @@ def GetLocation(request):
 		return {"location":location_dict["location"],"location_message":location_message}
 	else:
 		return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
-
 
 
 
