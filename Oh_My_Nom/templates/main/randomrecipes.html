@@ -7,15 +7,18 @@
 	<script type="text/javascript">
 	</script>
 	
-	<p>Random recipes you want:<p/> 
-	<div>
+	<h2>Your random recipes are:</h2> 
+	<div class = "recipes">
+	<p class = "p1">
 		{% for slug,name in recipes %}
 			<li><a id='recipe' href="/recipe/{{ slug }}">{{ name }}</a></li>
 		{% endfor %}
+		</p>
 	</div>
 	<br>
 	
-	<a href="{% url 'main:myrecipes' %}">my saved recipes</a>
+	
+        <a href="{% url 'main:myrecipes' %}" class="btn btn-lg btn-secondary">My Recipes</a>
 	<!-- button works fully, JavaScript rather than jQuery --> 
-	<button onclick="window.location.href='/randomrecipes';">Generate Random Recipes</button>
+		<a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Generate Random Recipes</a>
 {% endblock %}

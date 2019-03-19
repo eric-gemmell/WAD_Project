@@ -27,12 +27,35 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-image: url("background.jpg");
+  font-weight:bold;
+  font-size: 20px;
 }
 body {
   color: #fff;
   text-align: center;
+  font-weight:bold;
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
+}
+
+p{
+	
+	font-weight:bold;
+	font-size:30px;
+}
+div.recipes{
+	
+	font-weight:bold;
+	font-size:30px;
+}
+
+
+h1{
+  font-size: 100px;
+}
+
+h2{
+	font-size:45px;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -55,7 +78,6 @@ body {
 
 /* Padding for spacing */
 .inner {
-  padding: 2rem;
 }
 
 
@@ -63,16 +85,21 @@ body {
  * Header
  */
 
-.masthead {
-  margin-bottom: 2rem;
+.nav-masthead {
+  text-align:right;
+  width: 100%;
+
 }
+
 
 .masthead-brand {
   margin-bottom: 0;
+  text-align:center;
+  float:right;
 }
 
 .nav-masthead .nav-link {
-  padding: .25rem 0;
+  float:right;
   font-weight: bold;
   color: rgba(255,255,255,.5);
   background-color: transparent;
@@ -82,20 +109,27 @@ body {
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
   border-bottom-color: rgba(255,255,255,.25);
+  
+  float:right;
 }
 
 .nav-masthead .nav-link + .nav-link {
   margin-left: 1rem;
+  
+  text-align:center;
+  float:right;
 }
 
 .nav-masthead .active {
   color: #fff;
   border-bottom-color: #fff;
+  
+  float:right;
 }
 
 @media (min-width: 48em) {
   .masthead-brand {
-    float: left;
+    float: right;
   }
   .nav-masthead {
     float: right;
@@ -155,6 +189,9 @@ body {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 42rem;
+	  
+    width: 100%;
+	float:right;
+	background-color: #333;
   }
 }

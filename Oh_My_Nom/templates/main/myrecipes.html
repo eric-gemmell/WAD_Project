@@ -3,14 +3,14 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Welcome to your saved recipes <p/>
-	<div>
+	<h2> Welcome to your saved recipes: </h2>
+	<div class = "recipes">
 		{% for slug,name in myrecipes %}
 			<li><a id='recipe' href="/recipe/{{ slug }}">{{ name }}</a></li>
 		{% endfor %}
 	</div>
 	<br>
-	<a href="{% url 'main:randomrecipes' %}">Give Me More Recipes!</a>
+        <a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Give me more recipes!</a>
 {% endblock %}
 
 	<script src="{% static "js/click.js" %}"></script>

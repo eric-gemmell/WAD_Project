@@ -12,8 +12,10 @@
 		<link rel="icon" href="{% static 'images/favicon.ico' %}">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<title>
-			{% block title %}Oh My Nom{% endblock %}
+			{% block title %}Oh My Nom!{% endblock %}
 		</title>
+		
+		
 		<!-- Bootstrap core CSS -->
 		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
 		rel="stylesheet">
@@ -22,6 +24,9 @@
 		<link href=
 		"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
 		rel="stylesheet">
+		<style type="text/css">
+   
+</style>
 		</head>
 	<body>
 	<div class="site-wrapper">
@@ -33,12 +38,18 @@
           <div class="masthead clearfix">
             <div class="inner">
               <nav class="nav nav-masthead">
+			  {% if user.is_authenticated %}
                 <a class="nav-link active" href="{% url 'main:index' %}">Home</a>
-                <a class="nav-link" href="{% url 'main:registersignin' %}">Log in/Register</a>
-				{% if user.is_authenticated %}
+				<a class="nav-link active" href="{% url 'main:myrecipes' %}">My Recipes</a>
+                <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Contact</a>
 				<a class="nav-link" href="{% url 'main:signout' %}">Logout</a>
 				{% endif %}
+				
+				{% if user.is_anonymous %}
+				<a class="nav-link active" href="{% url 'main:index' %}">Home</a>
+				<a class="nav-link" href="{% url 'main:registersignin' %}">Register/Sign in</a>
                 <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Contact</a>
+				{% endif %}
               </nav>
             </div>
           </div>
