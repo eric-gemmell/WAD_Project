@@ -13,6 +13,7 @@ urlpatterns = [
 	path("hotrestaurantclicked/",views.hotrestaurantclicked,name="hotrestaurantclicked"),
 	path("myplaces/",views.myplaces,name="myplaces"),
 	path("getmyplaces/<int:page>/",views.getmyplaces,name="getmyplaces"),
+	path("deletemyplace/",views.deletemyplace,name="deletemyplace"),
 	path("getlocation/",views.getlocation,name="getlocation"),
 	path("getrestaurants/",views.getrestaurants,name="getrestaurants"),
 	#general pages

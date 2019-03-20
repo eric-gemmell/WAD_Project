@@ -1,4 +1,4 @@
-#Http importsq
+#Http imports
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, HttpResponseNotFound
@@ -132,7 +132,7 @@ def hotrestaurantclicked(request):
 			restaurant.name = json_dict["restaurant"]["name"]
 			restaurant.address = json_dict["restaurant"]["address"]
 			restaurant.save()
-		return HttpResponse(json_dict["restaurant"]["google_url"])
+		return HttpResponseRedirect(json_dict["restaurant"]["google_url"])
 	else:
 		return HttpResponseRedirect(reverse('main:hotrestaurants'))
 
@@ -159,6 +159,20 @@ def getmyplaces(request,page):
 													
 	return JsonResponse({"error":"unacceptable request","status":"not ok"})
 
+def deletemyplace(request):
+	if(request.user.is_authenticated):
+		if(request.method == "POST"):
+			try:
+				json_dict = json.loads(request.body.decode('utf-8'))
+			except:
+				return JsonResponse({"error":"bad json","status":"not ok"})
+			if("place_id" not in json_dict):
+				return JsonResponse({"error":"incomplete json","status":"not ok"})
+			to_delete = Restaurant.objects.filter(user = request.user, place_id = json_dict["place_id"])
+			to_delete.delete()
+			return JsonResponse({"status":"ok","message":"restaurant removed from favourites"})
+	return JsonResponse({"status":"not ok","error":"incorrect request mecanism"})
+			
 def randomrecipes(request):
 		recipes = []
 		names = []
