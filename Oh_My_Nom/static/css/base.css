@@ -54,15 +54,14 @@ a.link{
 }
 
 div.username{
-  float:left;
-  text-align: left;
-  font-weight: bold;
-  color: rgba(255,255,255,.5);
-  background-color: transparent;
-  margin-right: 80rem;
-  margin-left: 1rem;
-  margin-top:-5px;
-  border-bottom: .25rem solid transparent;
+  float:right;
+  font-weight:bold;
+  color:rgba(255,255,255,.5);
+  background-color:transparent;
+  margin-left:85%;
+  margin-top:10px;
+  border-bottom:.25rem solid transparent;
+  position:absolute; 
 }
 
 div.recipes{
