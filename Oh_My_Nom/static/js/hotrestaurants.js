@@ -3,7 +3,7 @@ var RESTAURANTS; // a list of dictionaries containing: image_url; google_url; na
 var INDEX = 0;
 
 console.log("Javascript is Running! YAY!");
-//THESE ARE THE 4 EVENTS THAT ARE HANDLED
+//THESE ARE THE 5 EVENTS THAT ARE HANDLED
 window.onload = function(){
 	console.log("Document has Loaded!");
 	GetLocation();
@@ -15,7 +15,6 @@ function UpdateLocation(){
 	GetLocation(document.getElementById("location_text").value);
 	document.getElementById("more_information").style.display = "none";
 }
-
 function NextRestaurant(){
 	if(RESTAURANTS == null){
 		console.log("no restaurants are loaded!");
@@ -60,7 +59,31 @@ function RestaurantClicked(){
 	xmlhttp.send(request_json_string);	
 	console.log("sent post for redirect");
 }
-
+function SaveRestaurant(){
+	var xmlhttp = new XMLHttpRequest();
+	var url = "/hotrestaurantclicked/"
+	var request_json_string = '{'
+			+ '"restaurant": { '
+				+ '"name" : "'+RESTAURANTS[INDEX].name+'",'
+				+ '"google_url" : "'+RESTAURANTS[INDEX].google_url+'",'
+				+ '"place_id" : "'+RESTAURANTS[INDEX].place_id+'",'
+				+ '"address" : "'+RESTAURANTS[INDEX].address+'",'
+				+ '"image_url" : "'+RESTAURANTS[INDEX].image_url+'"'
+			+ ' } '
+			+ ' } ';
+	console.log(request_json_string);	
+	console
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("restaurant_name").innerHTML += " has been added to your saved places!"
+		}
+	}
+	xmlhttp.open("POST", url, true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+	xmlhttp.send(request_json_string);	
+	console.log("sent post for saving restaurant");
+}
 
 function GetLocation(location_text){	
 	var xmlhttp = new XMLHttpRequest();
