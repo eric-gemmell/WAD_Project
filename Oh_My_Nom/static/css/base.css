@@ -17,6 +17,7 @@ a:hover {
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #fff;
   border: .05rem solid #fff;
+  font-weight:bold;
 }
 
 
@@ -53,7 +54,19 @@ div.recipes{
 	font-weight:bold;
 	font-size:30px;
 }
+.hidden{
+	background: transparent;
+    border: none !important;
+    font-size:0;
+}
 
+#restaurant{
+	font-weight:bold;
+}
+
+#restaurant_image {
+	max-height:300px;
+}
 
 h1{
   font-size: 100px;

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import PageAdmin, Recipe, SavedRecipe, Rating, UserInfo
+from main.models import PageAdmin, Recipe, SavedRecipe, Rating, UserInfo, Restaurant
 
 # Register your models here.
 
@@ -10,3 +10,4 @@ admin.site.register(Recipe)
 admin.site.register(SavedRecipe)
 admin.site.register(Rating)
 admin.site.register(UserInfo)
+admin.site.register(Restaurant)

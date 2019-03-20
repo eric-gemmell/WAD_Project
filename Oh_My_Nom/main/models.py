@@ -38,15 +38,6 @@ class Rating(models.Model):
 
     date = models.DateTimeField()
     description = models.CharField(max_length=100)
-    #dishType = models.CharField(max_length=100)
-    #price = models.CharField(max_length=100)
-    #fanciness = models.CharField(max_length=100)
-    #firstDate = models.CharField(max_length=100)
-    #lazyNight = models.CharField(max_length=100)
-    #difficulty = models.CharField(max_length=100)
-    #dishType = models.CharField(max_length=100)
-    #price = models.CharField(max_length=100)
-    #veggie = models.CharField(max_length=100)
     overall = models.CharField(max_length=100)
     
     def __str__(self):

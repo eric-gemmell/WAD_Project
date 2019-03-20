@@ -150,7 +150,27 @@ def logged_in_or_redirect(view_function):
 
 @logged_in_or_redirect	
 def myplaces(request):
-	return render(request,"main/myplaces.html")
+	user = None
+	myplaces = []
+	user = request.user
+	
+	for restaurant in Restaurant.objects.all():
+		print(restaurant)
+		place_id = restaurant.place_id
+		myplaces += [place_id]
+		#rList = str(recipe).split(" ")
+		#rec = rList[2:]
+		#strR = ""
+		#for el in rec:
+		#	strR = strR +" " + el
+		#result = strR[1:]
+		#for original in Recipe.objects.all():
+		#	if (result == original.title):
+		#		if recipe.user == user:
+		#			name = original.title
+		#			slug = original.slug
+		#			myrecipes += [(slug,name)]
+	return render(request, 'main/myplaces.html', {"myplaces":myplaces})
 
 @logged_in_or_redirect
 def myrecipes(request):
@@ -182,6 +202,7 @@ def getmyplaces(request):
 				if(json_dict["page"] != "undefined"):
 					pass					
 	return JsonResponse({"error":"unacceptable request"})
+	
 def test(request):
 	return render(request,"main/test.html")
 

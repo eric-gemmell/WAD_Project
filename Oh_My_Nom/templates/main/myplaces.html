@@ -2,6 +2,12 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Here are your saved restaurants! <p/> 
-	<a href="{% url 'main:hotrestaurants' %}">Another Random Restaurant</a>
+	<div class="box">
+	<p> Here are your saved restaurants! <p/>
+	{% for place_id in myplaces %}
+		<li> {{ place_id }} </li>
+	{% endfor %}
+	</div>
+	<br>
+	<a href="{% url 'main:hotrestaurants' %}" class="btn btn-lg btn-secondary">Another Random Restaurant</a>
 {% endblock %}
