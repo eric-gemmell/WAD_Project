@@ -1,4 +1,4 @@
-#Http imports
+#Http importsq
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse, HttpResponseNotFound
@@ -22,65 +22,6 @@ from main.forms import RatingForm
 def index(request):
 	return render(request,"main/index.html")
 
-def getlocation(request):
-	#get location stuff here
-	return JsonResponse(GetLocation(request))
-	
-def getrestaurants(request):
-	if request.method == "POST":
-		try:
-			json_dict = json.loads(request.body.decode('utf-8'))
-		except:
-			return JsonResponse({"error":"poor request"})
-
-		if("location" not in json_dict):
-			return JsonResponse({"error":"no location associated to request"})
-		location = json_dict["location"]
-		restaurants = GetRestaurantsFromLocation(location = location)
-		status = "ok" if (len(restaurants) > 0) else "not ok"
-		return JsonResponse({"restaurants":restaurants,"status":status})
-
-	return JsonResponse({"error":"incorrect request type, please use post..."})
-
-def hotrestaurants(request):
-	return render(request,"main/hotrestaurants.html")
-
-def hotrestaurantclicked(request):
-	if request.method == "POST":
-		try:
-			json_dict = json.loads(request.body.decode('utf-8'))
-		except:
-			return HttpResponse("Poor Json request object")
-		if("place_id" not in json_dict):
-			return HttpResponse("Incorrect parameters in json")
-		print(json_dict)
-		print("restaurant clicked! ;",json_dict["place_id"])
-		if(request.user.is_authenticated):
-			restaurant = Restaurant(user = request.user,place_id=json_dict["place_id"])
-			restaurant.save()
-			print("saved restaurant: ",restaurant)			
-		#do user adding restaurant stuff here
-		return JsonResponse({"status":"ok"})
-	else:
-		return HttpResponseRedirect(reverse('main:hotrestaurants'))
-
-def randomrecipes(request):
-		recipes = []
-		names = []
-		count = 0
-		
-		#get random numbers and pick those indices as recipes (range of how many recipes you have)
-		randList = random.sample(range(0,19),5)
-
-		for r in Recipe.objects.all():
-			if (count in randList):
-				name = r.title
-				slug = r.slug
-				url = r.url
-				recipes += [(slug,name)]
-			count += 1
-				
-		return render(request,"main/randomrecipes.html",{"recipes":recipes})
 
 def registersignin(request):
 	registered = False
@@ -148,9 +89,85 @@ def logged_in_or_redirect(view_function):
 		return view_function(*args,**kwargs)
 	return wrapper
 
+
+def getlocation(request):
+	#get location stuff here
+	return JsonResponse(GetLocation(request))
+	
+def getrestaurants(request):
+	if request.method == "POST":
+		try:
+			json_dict = json.loads(request.body.decode('utf-8'))
+		except:
+			return JsonResponse({"error":"poor request"})
+
+		if("location" not in json_dict):
+			return JsonResponse({"error":"no location associated to request"})
+		location = json_dict["location"]
+		restaurants = GetRestaurantsFromLocation(location = location)
+		status = "ok" if (len(restaurants) > 0) else "not ok"
+		return JsonResponse({"restaurants":restaurants,"status":status})
+
+	return JsonResponse({"error":"incorrect request type, please use post..."})
+
+def hotrestaurants(request):
+	return render(request,"main/hotrestaurants.html")
+
+def hotrestaurantclicked(request):
+	if request.method == "POST":
+		try:
+			json_dict = json.loads(request.body.decode('utf-8'))
+		except:
+			return HttpResponse("Poor Json request object")
+		if("place_id" not in json_dict):
+			return HttpResponse("Incorrect parameters in json")
+		if(request.user.is_authenticated):
+			restaurant = Restaurant(user = request.user,place_id=json_dict["place_id"])
+			restaurant.save()
+		#do user adding restaurant stuff here
+		return JsonResponse({"status":"ok"})
+	else:
+		return HttpResponseRedirect(reverse('main:hotrestaurants'))
+
+
+
 @logged_in_or_redirect	
 def myplaces(request):
 	return render(request,"main/myplaces.html")
+
+
+def getmyplaces(request,page):
+	if(request.user.is_authenticated):
+		if(request.method == "GET"):
+			if(page >= 0):
+				restaurants_per_page = 5
+				all_restaurants = Restaurant.objects.filter(user = request.user)
+				restaurants = []
+				for i in range(page*restaurants_per_page,(page+1)*restaurants_per_page):
+					if(i >= len(all_restaurants)):
+						break
+					restaurants.append({"place_id":all_restaurants[i].place_id})
+				return JsonResponse({"restaurants":restaurants,"status":"ok"})
+													
+	return JsonResponse({"error":"unacceptable request","status":"not ok"})
+
+def randomrecipes(request):
+		recipes = []
+		names = []
+		count = 0
+		
+		#get random numbers and pick those indices as recipes (range of how many recipes you have)
+		randList = random.sample(range(0,19),5)
+
+		for r in Recipe.objects.all():
+			if (count in randList):
+				name = r.title
+				slug = r.slug
+				url = r.url
+				recipes += [(slug,name)]
+			count += 1
+				
+		return render(request,"main/randomrecipes.html",{"recipes":recipes})
 
 @logged_in_or_redirect
 def myrecipes(request):
@@ -173,15 +190,6 @@ def myrecipes(request):
 					myrecipes += [(slug,name)]
 	return render(request, 'main/myrecipes.html', {"myrecipes":myrecipes})
 
-
-def getmyplaces(request):
-	if(request.user.is_authenticated):
-		if(request.method == "POST"):
-			json_dict = json.loads(request.body.decode("utf-8"))
-			if("page" in json_dict):
-				if(json_dict["page"] != "undefined"):
-					pass					
-	return JsonResponse({"error":"unacceptable request"})
 def test(request):
 	return render(request,"main/test.html")
 
