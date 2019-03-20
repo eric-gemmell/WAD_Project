@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.utils import timezone
 
 
+# Stores title and urls of recipes with a slug field to make recipe URLs readable
 class Recipe(models.Model):
         title = models.CharField(max_length=128, unique=True)
         url = models.URLField()
@@ -18,12 +19,13 @@ class Recipe(models.Model):
                 return self.title
 
 
-
+# PageAdmin model with fields title and url
 class PageAdmin(admin.ModelAdmin):
 	list_display = ('title','url')
 	
 
-
+# Stores users saved recipes in the database so they can then be displayed later on the website when they are logged in 
+# If user is deleted so are their saved recipes
 class SavedRecipe(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe,on_delete=models.CASCADE)
@@ -32,6 +34,7 @@ class SavedRecipe(models.Model):
         return self.user.username + " saves " + self.recipe.title
 
 
+# No longer used
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(SavedRecipe, on_delete=models.CASCADE)
@@ -44,6 +47,7 @@ class Rating(models.Model):
         return self.description
 
 
+# Saves users username and location in the database in User infos 
 class UserInfo(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	location = models.CharField(max_length=128)
@@ -51,9 +55,12 @@ class UserInfo(models.Model):
 	def __str__(self):
 		return self.user.username + "; location: "+ self.location
 
+
+# Stores the restaurants that the logged in user has saved along with their username 
 class Restaurant(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	place_id = models.CharField(max_length=200)
 
 	def __str__(self):
 		return "User '{}' saved restaurant: {}".format(self.user.username,self.place_id)
+

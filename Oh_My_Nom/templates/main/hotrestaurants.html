@@ -1,7 +1,6 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
-<!-- Should Only be seen if user is logged in -->
 {% block main_block %}
 
 	
@@ -9,16 +8,20 @@
 
 	{% csrf_token %}
 	Optimize your location: <input id="location_text" type="text" name="location" value="" size="10" />
-	<button onclick="UpdateLocation()" class="btn btn-lg btn-secondary">Update Location</button>
+	<button id ="update_location" onclick="UpdateLocation()" class="btn btn-lg btn-secondary">Update Location</button>
 	<br>
-	
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- Displays restaurant name, image and address that had been imported from the Google Maps API -->
 	<div id="restaurant">
 	<strong><p id="restaurant_name"></p></strong>
 	<img id="restaurant_image" src="">	
 	<br>
 	<strong><p id="restaurant_address"></p></strong>	
 	
-	
+	<!-- Displays the More Information and Generate Random Restaurant buttons -->  
 	<button onclick="RestaurantClicked()" class="btn btn-lg btn-secondary">More Information</button>
 	<button id="next_restaurant" onclick="NextRestaurant()" class="btn btn-lg btn-secondary">Generate Random Restaurant </button>
 	<button href="" class="hidden">More</button>

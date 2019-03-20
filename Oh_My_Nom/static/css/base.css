@@ -45,8 +45,24 @@ p{
 	font-size:30px;
 }
 
+div.bar{
+	float:right;
+}
+
 a.link{
 	font-size:40px;
+}
+
+div.username{
+  float:left;
+  text-align: left;
+  font-weight: bold;
+  color: rgba(255,255,255,.5);
+  background-color: transparent;
+  margin-right: 80rem;
+  margin-left: 1rem;
+  margin-top:-5px;
+  border-bottom: .25rem solid transparent;
 }
 
 div.recipes{

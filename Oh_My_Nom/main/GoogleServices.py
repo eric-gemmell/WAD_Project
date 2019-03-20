@@ -81,6 +81,7 @@ def GetRestaurantsFromLocation(location = ['55.8723715', '-4.2826219']):
             result.append(RestaurantInfoDictFromGoogleResponse(RestaurantInfo))
         return result
 
+
 def GetRestaurantFromPlace_ID(place_id = "ChIJxwP9GjJEiEgRps-HjBk6lPk"):
 	#returns a dictionary containing, an image url, a name, the address, the place_id, the google_maps url
 	#and a status code indicating all is okay
@@ -94,6 +95,7 @@ def GetRestaurantFromPlace_ID(place_id = "ChIJxwP9GjJEiEgRps-HjBk6lPk"):
 	else:
 		result["status"] = "ok"
 		return result 
+
 
 def GetRequestIP(request):
 	ip, is_routable = get_client_ip(request)
@@ -109,6 +111,7 @@ def GetRequestIP(request):
 	else:
 		pass
 	return ip
+
 
 import json
 def GetLocation(request):
@@ -169,12 +172,4 @@ def GetLocation(request):
 		return {"location":location_dict["location"],"location_message":location_message}
 	else:
 		return {"location":location_dict["location"],"location_message":"Using '{}' as your location".format(location_dict["address"])}
-
-
-
-
-
-
-
-
 

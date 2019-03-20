@@ -1,7 +1,6 @@
 from django.contrib import admin
 from main.models import PageAdmin, Recipe, SavedRecipe, Rating, UserInfo, Restaurant
 
-# Register your models here.
 
 class PageAdmin(admin.ModelAdmin):
 	list_display = ('title', 'url')

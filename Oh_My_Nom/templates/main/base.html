@@ -1,3 +1,4 @@
+<!-- Loading in static files and urls --> 
 {% load staticfiles %}
 {% load admin_urls %}
 <!DOCTYPE html>
@@ -19,7 +20,7 @@
 		<!-- Bootstrap core CSS -->
 		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
 		rel="stylesheet">
-		<!-- Custom styles for this template -->
+		<!-- Custom styles for Cover template from Bootstrap-->
 		<link href="{% static 'css/base.css' %}" rel="stylesheet">
 		<link href=
 		"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
@@ -38,14 +39,19 @@
           <div class="masthead clearfix">
             <div class="inner">
               <nav class="nav nav-masthead">
+			  <!-- Display following buttons in the nav bar if the user is authenticated --> 
 			  {% if user.is_authenticated %}
                 <a class="nav-link " href="{% url 'main:index' %}">Home</a>
 				<a class="nav-link " href="{% url 'main:myrecipes' %}">My Recipes</a>
 				<a class="nav-link " href="{% url 'main:myplaces' %}">My Restaurants</a>
                 <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Contact Us</a>
 				<a class="nav-link" href="{% url 'main:signout' %}">Logout</a>
-				{% endif %}
 				
+				<!-- Display a welcome message in the nav bar when the user in logged in -->
+				<div class="username" href="">Welcome {{ user.username }}</div>
+				
+				{% endif %}
+				<!-- Display following buttons in the nav bar if the user is not authenticated --> 
 				{% if user.is_anonymous %}
 				<a class="nav-link " href="{% url 'main:index' %}">Home</a>
 				<a class="nav-link" href="{% url 'main:registersignin' %}">Register/Sign in</a>
@@ -60,17 +66,11 @@
 	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js">
-		<!-- If you are using Bootstrap, then scroll to the bottom of the template code, You will see the JQuery -->
-		<!-- library being imported at the end. You can then add a link to rango-ajax.js after the JQuery library import (chapter 17.1 --> 
 	</script>
-		<div>
-			{% if user.is_authenticated %}
-				Welcome {{ user.username }}.
-			{% endif %}			
-		<div/>
+		
 		<div>
                         {% block main_block %}
-                                
+                                <!-- Other templates that inherit base will have the contents of their main body block inserted here --> 
                         {% endblock%}
         </div>
 	

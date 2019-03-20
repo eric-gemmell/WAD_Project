@@ -1,12 +1,13 @@
 {% extends 'main/base.html' %}
 {% load staticfiles %}
 
+<!-- Displays website name and slogan along with two buttons to generate either random recipes or a random restaurant based on users location -->
 {% block main_block %}
 	<div class="inner cover">
         <h1 class="cover-heading">Oh My Nom!</h1>
         <p>Feed me, I'm bored!</p>
         <p class="lead">
-        <a href="{% url 'main:hotrestaurants' %}" class="btn btn-lg btn-secondary">Take Me Out!</a>
+        <a href="{% url 'main:hotrestaurants' %}" class="btn btn-lg btn-secondary">Take Me Out</a>
 		<a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Generate Random Recipes</a>
         </p>
     </div>

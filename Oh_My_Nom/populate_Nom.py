@@ -5,6 +5,7 @@ import django
 django.setup()
 from main.models import Recipe, User, SavedRecipe
 
+# List of dictionaries of recipes to be stored in the database 
 def populate():
 	recipes = [
 	{"title": "Sweet Vegan Fajitas",

@@ -4,12 +4,14 @@
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
 	<h2> Welcome to your saved recipes: </h2>
+	<!-- Displays all the users saved recipes when they are logged in --> 
 	<div class = "recipes">
 		{% for slug,name in myrecipes %}
 			<li><a id='recipe' href="/recipe/{{ slug }}">{{ name }}</a></li>
 		{% endfor %}
 	</div>
 	<br>
+		<!-- Also gives the user the option to generate another random recipe --> 
         <a href="{% url 'main:randomrecipes' %}" class="btn btn-lg btn-secondary">Give me more recipes!</a>
 {% endblock %}
 

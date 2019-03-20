@@ -14,6 +14,13 @@ function UpdateLocation(){
 	console.log("Update Location Pressed!");
 	GetLocation(document.getElementById("location_text").value);
 	document.getElementById("more_information").style.display = "none";
+	var input = document.getElementById("location_text");
+	input.addEventListener("keyup", function(GetLocation) {
+	if (GetLocation.keyCode === 13) {
+		GetLocation.preventDefault();
+		document.getElementById("update_location").click();
+		}	
+	});
 }
 
 function NextRestaurant(){
@@ -123,3 +130,5 @@ function shuffle(a) {
 	}
 	return a;
 }
+
+

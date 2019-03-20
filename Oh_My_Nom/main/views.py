@@ -22,10 +22,12 @@ from main.forms import RatingForm
 def index(request):
 	return render(request,"main/index.html")
 
+
 def getlocation(request):
 	#get location stuff here
 	return JsonResponse(GetLocation(request))
 	
+
 def getrestaurants(request):
 	if request.method == "POST":
 		try:
@@ -42,8 +44,10 @@ def getrestaurants(request):
 
 	return JsonResponse({"error":"incorrect request type, please use post..."})
 
+
 def hotrestaurants(request):
 	return render(request,"main/hotrestaurants.html")
+
 
 def hotrestaurantclicked(request):
 	if request.method == "POST":
@@ -64,6 +68,8 @@ def hotrestaurantclicked(request):
 	else:
 		return HttpResponseRedirect(reverse('main:hotrestaurants'))
 
+
+# Generates 5 random recipes for the user 
 def randomrecipes(request):
 		recipes = []
 		names = []
@@ -81,6 +87,7 @@ def randomrecipes(request):
 			count += 1
 				
 		return render(request,"main/randomrecipes.html",{"recipes":recipes})
+
 
 def registersignin(request):
 	registered = False
@@ -137,9 +144,11 @@ def registersignin(request):
 		
 	return render(request,"main/registersignin.html",context = context_dict)
 
+
 def signout(request):
 	logout(request)
 	return HttpResponseRedirect(reverse("main:index"))
+
 
 def logged_in_or_redirect(view_function):
 	def wrapper(*args,**kwargs):
@@ -147,6 +156,7 @@ def logged_in_or_redirect(view_function):
 			return HttpResponseRedirect(reverse("main:registersignin"))
 		return view_function(*args,**kwargs)
 	return wrapper
+
 
 @logged_in_or_redirect	
 def myplaces(request):
@@ -172,6 +182,9 @@ def myplaces(request):
 		#			myrecipes += [(slug,name)]
 	return render(request, 'main/myplaces.html', {"myplaces":myplaces})
 
+
+
+# Displays the names of the recipes the user had saved when that user is logged in 
 @logged_in_or_redirect
 def myrecipes(request):
 	user = None
@@ -203,35 +216,31 @@ def getmyplaces(request):
 					pass					
 	return JsonResponse({"error":"unacceptable request"})
 	
+
 def test(request):
 	return render(request,"main/test.html")
 
+
+# Allows a logged in user to save a recipe and notifies them when it has been saved
 @logged_in_or_redirect
 def save_recipe(request):
 	context_dict = {}
-	print("OMG")
 	if request.method == "POST":
-		print("Got a post request")
 		recipe_title =  request.POST.get('recipe_title')
-		print(recipe_title)
 		if (recipe_title==None):
-			print("recipe not found... this shouldnt happen")
 			return HttpResponseNotFound("Go back")
 			
 		recipe = get_object_or_404(Recipe,title=recipe_title)
-		print("Got da sweet recipe, gonna save it to the database")
 		s = SavedRecipe.objects.get_or_create(recipe=recipe,user=request.user)[0]
-		print("saving recipe object: ",s)
 		s.save()
-		print("saved the recipe, WELL DONE!")
 		context_dict["recipe"] = recipe
 		context_dict["message"] = "Recipe saved!"
 		return render(request, "main/recipe.html", context_dict)
 	else:
-		print("ERROR!")
 		return HttpResponse("")
 
 
+# Shows a recipe from the database
 def show_recipe(request, slug):
         context_dict = {}
         try:
@@ -240,6 +249,7 @@ def show_recipe(request, slug):
         except Recipe.DoesNotExist:
                 context_dict["recipe"] = None
         return render(request, 'main/recipe.html', context_dict)
+
 
 @login_required
 def add_rating(request):

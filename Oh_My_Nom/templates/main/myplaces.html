@@ -3,11 +3,13 @@
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
 	<div class="box">
+	<!-- Displays all the users saved restaurants when they are logged in --> 
 	<p> Here are your saved restaurants! <p/>
 	{% for place_id in myplaces %}
 		<li> {{ place_id }} </li>
 	{% endfor %}
 	</div>
 	<br>
+	<!-- Also gives the user the option to generate another random restaurant --> 
 	<a href="{% url 'main:hotrestaurants' %}" class="btn btn-lg btn-secondary">Another Random Restaurant</a>
 {% endblock %}
