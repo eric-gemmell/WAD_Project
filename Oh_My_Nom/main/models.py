@@ -63,6 +63,9 @@ class UserInfo(models.Model):
 class Restaurant(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	place_id = models.CharField(max_length=200)
-
+	url = models.CharField(max_length=200)
+	image_url  = models.CharField(max_length=200)
+	name = models.CharField(max_length = 100)
+	address = models.CharField(max_length = 250)
 	def __str__(self):
-		return "User '{}' saved restaurant: {}".format(self.user.username,self.place_id)
+		return "User '{}' saved restaurant: {}".format(self.user.username,self.name)

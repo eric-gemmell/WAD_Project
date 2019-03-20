@@ -1,8 +1,13 @@
 {% extends 'main/base.html' %}
+{% load staticfiles %}
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
 	<p> Here are your saved restaurants! <p/> 
 	<a href="{% url 'main:hotrestaurants' %}">Another Random Restaurant</a>
-	
+	<div id="restaurants_container">
+	</div>		
+	<button id="previous_page" onclick="PrevPage()">Previous Page</button>
+	<button id="next_page" onclick="NextPage()">Next Page</button>
+	<script src="{% static "js/myplaces.js" %}"></script>
 {% endblock %}

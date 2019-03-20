@@ -38,8 +38,17 @@ function NextRestaurant(){
 function RestaurantClicked(){
 	var xmlhttp = new XMLHttpRequest();
 	var url = "/hotrestaurantclicked/"
-	var request_json_string = '{ "place_id":"'+RESTAURANTS[INDEX].place_id+'" }';
+	var request_json_string = '{'
+			+ '"restaurant": { '
+				+ '"name" : "'+RESTAURANTS[INDEX].name+'",'
+				+ '"google_url" : "'+RESTAURANTS[INDEX].google_url+'",'
+				+ '"place_id" : "'+RESTAURANTS[INDEX].place_id+'",'
+				+ '"address" : "'+RESTAURANTS[INDEX].address+'",'
+				+ '"image_url" : "'+RESTAURANTS[INDEX].image_url+'"'
+			+ ' } '
+			+ ' } ';
 	console.log(request_json_string);	
+	console
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			location.replace(RESTAURANTS[INDEX].google_url);
@@ -61,8 +70,8 @@ function GetLocation(location_text){
 			var location_json = JSON.parse(this.responseText);
 			console.log("Location object received from server, /getlocation/");
 			console.log(this.responseText);
-			LOCATION = location_json.location
-			document.getElementById("location_message").innerHTML = location_json.location_message
+			LOCATION = location_json.location;
+			document.getElementById("location_message").innerHTML = location_json.location_message;
 			//Do Stuff with location here
 			GetRestaurants();
 		}
