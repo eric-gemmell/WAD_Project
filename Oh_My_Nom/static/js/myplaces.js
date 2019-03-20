@@ -50,6 +50,11 @@ function GetRestaurant(index){
 }
 function DisplayRestaurants(){
 	$( "#restaurants_container" ).children().remove();
+	if(RESTAURANTS.length == 0){
+		$( "#restaurants_container" ).append('<div id="restaurant">');
+		$( "#restaurants_container" ).append('<p>No Restaurants Saved Under This Account!</p>');
+		$( "#restaurants_container" ).append('</div><br>');
+	}
 	for (var i = 0; i < RESTAURANTS.length; i++) {
 		restaurant = RESTAURANTS[i];
 		console.log("appending restaurant");

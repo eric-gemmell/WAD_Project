@@ -125,14 +125,14 @@ def hotrestaurantclicked(request):
 		if not all (element in necessary_elements for element in json_dict["restaurant"]):
 			return HttpResponse("Incorrect parameters in json")
 		if(request.user.is_authenticated):
-			restaurant = Restaurant(user = request.user)
+			restaurant = Restaurant.objects.get_or_create(user = request.user,place_id=json_dict["restaurant"]["place_id"])[0]
 			restaurant.place_id = json_dict["restaurant"]["place_id"]
 			restaurant.image_url = json_dict["restaurant"]["image_url"]
 			restaurant.url = json_dict["restaurant"]["google_url"]
 			restaurant.name = json_dict["restaurant"]["name"]
 			restaurant.address = json_dict["restaurant"]["address"]
 			restaurant.save()
-		return HttpResponseRedirect(json_dict["restaurant"]["google_url"])
+		return HttpResponse(json_dict["restaurant"]["google_url"])
 	else:
 		return HttpResponseRedirect(reverse('main:hotrestaurants'))
 
@@ -149,6 +149,8 @@ def getmyplaces(request,page):
 			if(page >= 0):
 				restaurants_per_page = 1
 				all_restaurants = Restaurant.objects.filter(user = request.user)
+				if(len(all_restaurants) == 0):
+					return JsonResponse({"restaurants":[], "status":"ok","message":"You don't have any saved restaurants!"})
 				restaurants = []
 				for i in range(page*restaurants_per_page,(page+1)*restaurants_per_page):
 					if(i >= len(all_restaurants)):
