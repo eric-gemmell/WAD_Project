@@ -19,7 +19,7 @@ function DeleteRestaurant(local_index){
 		if (this.readyState == 4 && this.status == 200) {
 			console.log("Response object received from server, /deletemyplace/");
 			console.log(this.responseText);
-			GetRestaurant(INDEX);
+			GetRestaurant(0);
 		}
 	};
 	var request_json_string = '{ "place_id":"'+RESTAURANTS[local_index].place_id+'" }';
@@ -36,10 +36,10 @@ function GetRestaurant(index){
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			json_dict = JSON.parse(this.responseText);
-			RESTAURANTS = json_dict.restaurants;
 			console.log("Restaurant objects received from server, /getmyplaces/");
 			console.log(this.responseText);
 			if(json_dict.status == "ok"){
+				RESTAURANTS = json_dict.restaurants;
 				INDEX = index;
 				DisplayRestaurants();
 			}
