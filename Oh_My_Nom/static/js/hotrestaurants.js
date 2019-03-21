@@ -27,7 +27,7 @@ function NextRestaurant(){
 		INDEX = (INDEX+1)%RESTAURANTS.length;
 		console.log("restaurant index:");
 		console.log(INDEX);	
-	
+		document.getElementById("saved_restaurant").innerHTML = "";	
 		document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name;
 		document.getElementById("restaurant_image").src = RESTAURANTS[INDEX].image_url;
 		document.getElementById("restaurant_address").innerHTML = RESTAURANTS[INDEX].address;
@@ -79,7 +79,7 @@ function SaveRestaurant(){
 			console.log(this.responseText);
 			console.log(json.status);
 			if(json.status == "ok"){	
-				document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name +" has been added to your saved places!";
+				document.getElementById("saved_restaurant").innerHTML = RESTAURANTS[INDEX].name +" has been added to your saved places!";
 			}
 			else{
 				location.replace("/registersignin/");

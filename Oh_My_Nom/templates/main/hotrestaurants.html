@@ -3,7 +3,7 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<a href="{% url 'main:myplaces' %}">See your saved restaurants!</a>
+	<link href="{% static 'css/hotrestaurants.css' %}" rel="stylesheet">
 	
 	<p id="location_message" style="white-space: pre-line"></p>
 
@@ -14,17 +14,18 @@
 	
 	<div id="restaurant">
 	<strong><a href="#" onclick="RestaurantClicked();return false;" id="restaurant_name"></a></strong>
+	<button  class="btn btn-secondary" onclick="SaveRestaurant()">Save Restaurant</button>
 	<br>	
+	<div id="saved_restaurant"></div>
 	<img id="restaurant_image" src="">	
 	<br>
 	<strong><p id="restaurant_address"></p></strong>	
-	<br>
-	<button id="more_information" onclick="SaveRestaurant()">Save Restaurant</button>
-	</div>
 
-	<div>
-	<button id="next_restaurant" onclick="NextRestaurant()">Another!</button>
 	</div>
+	<br>
+
+	<button id="next_restaurant" class="btn btn-secondary" onclick="NextRestaurant()">Give Me Another Restaurant!</button>
+	<a href="{% url 'main:myplaces' %}" class="btn btn-secondary">See Your Saved Recipes</a>
 
 	<script type="text/javascript" src="{% static "js/hotrestaurants.js" %}"></script>
 
