@@ -3,6 +3,8 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
+	<script type="text/javascript" src="{% static "js/hotrestaurants.js" %}"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<a href="{% url 'main:myplaces' %}">See your saved restaurants!</a>
 	
 	<p id="location_message" style="white-space: pre-line"></p>
@@ -26,6 +28,5 @@
 	<button id="next_restaurant" onclick="NextRestaurant()">Another!</button>
 	</div>
 
-	<script src="{% static "js/hotrestaurants.js" %}"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
 {% endblock %}

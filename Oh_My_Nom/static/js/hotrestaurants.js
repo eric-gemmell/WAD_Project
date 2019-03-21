@@ -47,7 +47,6 @@ function RestaurantClicked(){
 			+ ' } '
 			+ ' } ';
 	console.log(request_json_string);	
-	console
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			location.replace(RESTAURANTS[INDEX].google_url);
@@ -59,6 +58,7 @@ function RestaurantClicked(){
 	xmlhttp.send(request_json_string);	
 	console.log("sent post for redirect");
 }
+
 function SaveRestaurant(){
 	var xmlhttp = new XMLHttpRequest();
 	var url = "/hotrestaurantclicked/"
@@ -72,10 +72,9 @@ function SaveRestaurant(){
 			+ ' } '
 			+ ' } ';
 	console.log(request_json_string);	
-	console
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("restaurant_name").innerHTML += " has been added to your saved places!"
+			document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name +" has been added to your saved places!";
 		}
 	}
 	xmlhttp.open("POST", url, true);
