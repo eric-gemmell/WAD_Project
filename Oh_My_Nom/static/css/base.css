@@ -44,6 +44,10 @@ p{
 	font-size:30px;
 }
 
+#restaurant_image {
+        max-height:300px;
+}
+
 a.link{
 	font-size:40px;
 }
