@@ -59,6 +59,9 @@ function RestaurantClicked(){
 	xmlhttp.send(request_json_string);	
 	console.log("sent post for redirect");
 }
+function randomfunction(){
+	console.log("random function called");
+}
 function SaveRestaurant(){
 	var xmlhttp = new XMLHttpRequest();
 	var url = "/hotrestaurantclicked/"
