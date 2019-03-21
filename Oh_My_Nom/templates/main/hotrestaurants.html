@@ -5,27 +5,28 @@
 {% block main_block %}
 	<link href="{% static 'css/hotrestaurants.css' %}" rel="stylesheet">
 	
+	<a id="top_link" href="{% url 'main:myplaces' %}">Saved Places</a>
+	<a id="top_link" href="{% url 'main:hotrestaurants' %}">Random Restaurants</a>
+	<br>	
+	<br>
 	<p id="location_message" style="white-space: pre-line"></p>
 
 	{% csrf_token %}
 	Optimize your location: <input id="location_text" type="text" name="location" value="" size="10" />
-	<button onclick="UpdateLocation()">Update Location</button>
+	<button class="btn btn-secondary" onclick="UpdateLocation()">Update Location</button>
 	<br>
 	
 	<div id="restaurant">
 	<strong><a href="#" onclick="RestaurantClicked();return false;" id="restaurant_name"></a></strong>
-	<button  class="btn btn-secondary" onclick="SaveRestaurant()">Save Restaurant</button>
+	<button id="save_restaurant" class="btn btn-secondary" onclick="SaveRestaurant()">Save Restaurant</button>
 	<br>	
 	<div id="saved_restaurant"></div>
 	<img id="restaurant_image" src="">	
 	<br>
 	<strong><p id="restaurant_address"></p></strong>	
-
 	</div>
-	<br>
 
 	<button id="next_restaurant" class="btn btn-secondary" onclick="NextRestaurant()">Give Me Another Restaurant!</button>
-	<a href="{% url 'main:myplaces' %}" class="btn btn-secondary">See Your Saved Recipes</a>
 
 	<script type="text/javascript" src="{% static "js/hotrestaurants.js" %}"></script>
 

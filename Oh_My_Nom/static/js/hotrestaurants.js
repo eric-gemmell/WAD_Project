@@ -8,12 +8,14 @@ window.onload = function(){
 	console.log("Document has Loaded!");
 	GetLocation();
 	document.getElementById("more_information").style.display = "none";
+	document.getElementById("save_restaurant").style.display = "none";
 }
 
 function UpdateLocation(){
 	console.log("Update Location Pressed!");
 	GetLocation(document.getElementById("location_text").value);
 	document.getElementById("more_information").style.display = "none";
+	document.getElementById("save_restaurant").style.display = "none";
 }
 function NextRestaurant(){
 	if(RESTAURANTS == null){
@@ -32,6 +34,7 @@ function NextRestaurant(){
 		document.getElementById("restaurant_image").src = RESTAURANTS[INDEX].image_url;
 		document.getElementById("restaurant_address").innerHTML = RESTAURANTS[INDEX].address;
 		document.getElementById("more_information").style.display = "block";
+		document.getElementById("save_restaurant").style.display = "block";
 	}	
 }
 function RestaurantClicked(){

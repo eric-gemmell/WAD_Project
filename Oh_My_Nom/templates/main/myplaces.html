@@ -3,12 +3,14 @@
 
 <!-- Should Only be seen if user is logged in -->
 {% block main_block %}
-	<p> Here are your saved restaurants! <p/> 
-	<a href="{% url 'main:hotrestaurants' %}">Another Random Restaurant</a>
+	<link rel="stylesheet" type="text/css" href="{% static "css/myplaces.css" %}"> 
+	<a id="top_link" href="{% url 'main:myplaces' %}">Saved Places</a>
+	<a id="top_link" href="{% url 'main:hotrestaurants' %}">Random Restaurants</a>
 	{% csrf_token %}
 	<div id="restaurants_container">
 	</div>		
-	<button id="previous_page" onclick="PrevPage()">Previous Page</button>
-	<button id="next_page" onclick="NextPage()">Next Page</button>
+	<button class="btn btn-secondary" id="previous_page" onclick="PrevPage();">Previous Page</button>
+	<button class="btn btn-secondary" id="next_page" onclick="NextPage();">Next Page</button>
+
 	<script src="{% static "js/myplaces.js" %}"></script>
 {% endblock %}

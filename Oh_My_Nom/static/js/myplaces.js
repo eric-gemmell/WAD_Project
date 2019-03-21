@@ -60,7 +60,7 @@ function DisplayRestaurants(){
 		console.log("appending restaurant");
 		console.log(restaurant.name);
 		$( "#restaurants_container" ).append('<div id="restaurant">');
-		$( "#restaurants_container" ).append('<button id="restaurant_delete" onclick="DeleteRestaurant('+i+')">Unfave this restaurant</button><br><br>');
+		$( "#restaurants_container" ).append('<button class="btn btn-secondary" id="restaurant_delete" onclick="DeleteRestaurant('+i+')">Unfave this restaurant</button><br><br>');
 		$( "#restaurants_container" ).append('<strong><a id="restaurant_name" href="'+restaurant.google_url+'">'+restaurant.name+'</a></strong><br>');	
 		$( "#restaurants_container" ).append('<img id="restaurant_image" src="'+restaurant.image_url+'">');
 		$( "#restaurants_container" ).append('</div><br>');
