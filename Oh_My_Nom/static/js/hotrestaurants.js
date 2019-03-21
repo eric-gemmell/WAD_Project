@@ -74,7 +74,16 @@ function SaveRestaurant(){
 	console.log(request_json_string);	
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name +" has been added to your saved places!";
+			console.log("got response");
+			var json = JSON.parse(this.responseText);
+			console.log(this.responseText);
+			console.log(json.status);
+			if(json.status == "ok"){	
+				document.getElementById("restaurant_name").innerHTML = RESTAURANTS[INDEX].name +" has been added to your saved places!";
+			}
+			else{
+				location.replace("/registersignin/");
+			}
 		}
 	}
 	xmlhttp.open("POST", url, true);
@@ -130,27 +139,4 @@ function GetRestaurants() {
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
 	xmlhttp.send(request_json_string);
-}
-function getCookie(cname) {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-	for(var i = 0; i <ca.length; i++) {
-		var c = ca[i];
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
-}
-
-function shuffle(a) {
-	for (let i = a.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[a[i], a[j]] = [a[j], a[i]];
-	}
-	return a;
 }

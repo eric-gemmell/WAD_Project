@@ -143,12 +143,12 @@ def hotrestaurantclicked(request):
 		try:
 			json_dict = json.loads(request.body.decode('utf-8'))
 		except:
-			return HttpResponse("Poor Json request object")
+			return JsonResponse({"status":"not ok","error":"bad json request"})
 		if("restaurant" not in json_dict):
-			return HttpResponse("Incorrect parameters in json")
+			return JsonResponse({"status":"not ok","error":"missing parameters"})
 		necessary_elements = ["place_id","image_url","name","address","google_url"]
 		if not all (element in necessary_elements for element in json_dict["restaurant"]):
-			return HttpResponse("Incorrect parameters in json")
+			return JsonResponse({"status":"not ok","error":"missing parameters"})
 		if(request.user.is_authenticated):
 			restaurant = Restaurant.objects.get_or_create(user = request.user,place_id=json_dict["restaurant"]["place_id"])[0]
 			restaurant.place_id = json_dict["restaurant"]["place_id"]
@@ -157,9 +157,10 @@ def hotrestaurantclicked(request):
 			restaurant.name = json_dict["restaurant"]["name"]
 			restaurant.address = json_dict["restaurant"]["address"]
 			restaurant.save()
-		return HttpResponse(json_dict["restaurant"]["google_url"])
+			return JsonResponse({"status":"ok"})
+		return JsonResponse({"status":"not ok","error":"user not logged in"})
 	else:
-		return HttpResponseRedirect(reverse('main:hotrestaurants'))
+		return JsonResponse({"status":"not ok","error":"incorrect request type"})
 
 
 
