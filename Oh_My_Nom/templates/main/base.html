@@ -18,17 +18,13 @@
 		
 		
 		<!-- Bootstrap core CSS -->
-		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
-		rel="stylesheet">
+		<link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Custom styles for Cover template from Bootstrap-->
 		<link href="{% static 'css/base.css' %}" rel="stylesheet">
-		<link href=
-		"http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
-		rel="stylesheet">
-		<style type="text/css">
-   
-</style>
-		</head>
+		<link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"rel="stylesheet">
+		<style type="text/css"></style>
+	</head>
+	
 	<body>
 	<div class="site-wrapper">
 
@@ -38,6 +34,10 @@
 
           <div class="masthead clearfix">
             <div class="inner">
+			<!-- Display a welcome message in the nav bar when the user in logged in -->
+			{% if user.is_authenticated %}
+			<h5 class="masthead-brand">Welcome {{ user.username }}</h5>
+			{% endif %}
               <nav class="nav nav-masthead">
 			  <!-- Display following buttons in the nav bar if the user is authenticated --> 
 			  {% if user.is_authenticated %}
@@ -46,10 +46,6 @@
 				<a class="nav-link " href="{% url 'main:myplaces' %}">My Restaurants</a>
                 <a class="nav-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Contact Us</a>
 				<a class="nav-link" href="{% url 'main:signout' %}">Logout</a>
-				
-				<!-- Display a welcome message in the nav bar when the user in logged in -->
-				<div class="username" href="">Welcome {{ user.username }}</div>
-				
 				{% endif %}
 				<!-- Display following buttons in the nav bar if the user is not authenticated --> 
 				{% if user.is_anonymous %}
@@ -82,15 +78,10 @@
 	<!-- Bootstrap core JavaScript
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
-	</script>
-	<script
-		src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
-	</script>
+	<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script
-		src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
-	</script>
+	<script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
 </html>
