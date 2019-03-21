@@ -19,6 +19,8 @@ urlpatterns = [
 	#general pages
 	path("registersignin/",views.registersignin,name="registersignin"),
 	path("signout/",views.signout,name="signout"),
+	path("usersettings/",views.usersettings,name="usersettings"),
+	path("deleteuser/",views.deleteuser,name="deleteuser"),
 	#testing pages
 	path("test/",views.test,name="test"),
 	path("admin/", admin.site.urls),

@@ -89,6 +89,31 @@ def logged_in_or_redirect(view_function):
 		return view_function(*args,**kwargs)
 	return wrapper
 
+@logged_in_or_redirect
+def usersettings(request):
+	print("user settings view request")
+	if request.method == "POST":
+		print("got a post request")
+		if(request.POST.get("location")):
+			location = request.POST.get("location")
+			print("got new location", location)
+			userinfo = UserInfo.objects.get_or_create(user = request.user)[0]
+			print(type(userinfo))
+			userinfo.location = location
+			userinfo.save()
+			print("location saved !")
+
+	return render(request,"main/usersettings.html")
+
+
+def deleteuser(request):
+	if request.method == "POST":
+		if request.user.is_authenticated:
+			user = request.user
+			logout(request)
+			user.delete()
+			print("user deleted")
+	return HttpResponseRedirect(reverse("main:index"))
 
 def getlocation(request):
 	#get location stuff here

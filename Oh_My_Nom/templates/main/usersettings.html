@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+<!-- Should Only be seen if user is logged in -->
+{% block main_block %}
+	<form id="Location_form" method="post" action="{% url 'main:usersettings' %}"enctype="multipart/form-data">
+		{% csrf_token %}
+		<p>Current location is: {{ user.userinfo.location }}</p>
+		Change location: <input type="text" name="location" value="{{ user.userinfo.location }}" size="50" />
+		<br />
+		<input type="submit" name="submit" class="btn btn-lg btn-secondary" value="Change location" />
+	</form>
+	
+	<form id="Location_form" method="post" action="{% url 'main:deleteuser' %}"enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="submit" name="submit" class="btn btn-lg btn-secondary" value="Delete Account" />
+{% endblock %}
