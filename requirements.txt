@@ -1,6 +1,7 @@
 certifi==2019.3.9
 chardet==3.0.4
 Django==2.1.7
+django-ipware==2.1.0
 idna==2.8
 pytz==2018.9
 requests==2.21.0
