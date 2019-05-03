@@ -5,4 +5,4 @@ django-ipware==2.1.0
 idna==2.8
 pytz==2018.9
 requests==2.21.0
-urllib3==1.24.1
+urllib3
